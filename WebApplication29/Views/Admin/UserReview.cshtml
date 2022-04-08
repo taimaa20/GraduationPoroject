@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebApplication29.Models.joins>
+
+@{
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var countOFEmployees= ViewBag.countOFEmployees ;
+
+    var countOFUsers = ViewBag.countOFUsers; 
+       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","UserServiceId" ,"ServiceId"
+          ,"date"," Status","ReviewRange","ReviewText"
+     };
+
+}
+
+
+                
+      <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">All User Reviews</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                                            @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                }
+                                        </tr>
+                                    </thead>
+        <tbody>
+
+            @{
+                
+                 @if (Model != null)
+            {
+                foreach (var data in Model)
+             
+                {
+
+                    <tr>
+                        <td>@data.users.UserImage </td>
+                        <td>@data.users.FirstName </td>
+                        <td>@data.users.LastName</td>
+                         <td>@data.userService.UserServiceId </td>
+                        <td>@data.userService.ServiceId </td>
+                    
+                     
+                         <td>@data.userService.Date </td>
+                        <td>@data.userService.Status </td>
+                           <td>@data.review.ReviewRange </td>
+                         <td>@data.review.ReviewText </td>
+                        
+                    </tr>
+
+
+                }
+            }
+            }
+        </tbody>
+         </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+
+   
+</div>

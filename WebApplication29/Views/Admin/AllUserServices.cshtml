@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebApplication29.Models.joins>
+
+@{
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var countOFEmployees= ViewBag.countOFEmployees ;
+
+    var countOFUsers = ViewBag.countOFUsers; 
+       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","ServiceID" ,"ServiceName"
+          ,"Price"," CategoryId"," UserId","Description","Date","Status","UserServiceId"
+     };
+
+}
+
+
+   <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="AllUserServices">
+                <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" name="ServName"  placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                         <input type="submit" value="search"  class="btn btn-primary " />   
+                                                 <h6 style="padding-top: 10px;padding-left: 10px;font-size: 20px;">
+    <a asp-action="AllUserServices">get all</a>
+</h6>
+                        </div> 
+
+              
+                 </form>
+                
+      <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">All User Services </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                                            @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                }
+                                        </tr>
+                                    </thead>
+        <tbody>
+
+            @{
+                
+                 @if (Model != null)
+            {
+                foreach (var data in Model)
+             
+                {
+
+                    <tr>
+                        <td>@data.users.UserImage </td>
+                        <td>@data.users.FirstName </td>
+                        <td>@data.users.LastName</td>
+                        <td>@data.services.ServiceId </td>
+                        <td>@data.services.ServiceName </td>
+                        <td>@data.services.Price </td>
+                        <td>@data.services.CategoryId </td>
+                        <td>@data.services.UserId </td>
+                        <td>@data.services.Description</td>
+                         <td>@data.userService.Date </td>
+                        <td>@data.userService.Status </td>
+                        <td>@data.userService.UserServiceId </td>
+
+                    </tr>
+
+
+                }
+            }
+            }
+        </tbody>
+              </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+
+   
+</div>

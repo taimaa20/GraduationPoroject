@@ -19,11 +19,29 @@ namespace WebApplication29.Controllers
             _context = context;
         }
 
+        HomeServicesNewContext db = new HomeServicesNewContext();
         // GET: Salaries
         public async Task<IActionResult> Index()
         {
-            var homeServicesNewContext = _context.Salaries.Include(s => s.User);
-            return View(await homeServicesNewContext.ToListAsync());
+            List<User> users = db.Users.ToList();
+
+
+            List<Login> logins = db.Logins.ToList();
+            List<Role> roles = db.Roles.ToList();
+            List<Salary> salaries = db.Salaries.ToList();
+
+            var employeeSalaryRecord = from us in users
+                                       join log in logins on us.LoginId equals log.LoginId into table1
+                                       from log in table1.ToList()
+                                       join rol in roles on log.RoleId equals rol.RoleId into table2
+                                       from rol in table2.ToList()
+                                       join sal in salaries on us.UserId equals sal.UserId into table3
+                                       from sal in table3.ToList()
+                                       select new joins { salaries = sal, roles = rol, users = us, logins = log };
+
+         
+            var homeServicesNewContext= employeeSalaryRecord.Where(x => x.roles.RoleId ==3 || x.roles.RoleId == 4);
+            return View( homeServicesNewContext.ToList());
         }
 
         // GET: Salaries/Details/5
@@ -48,7 +66,9 @@ namespace WebApplication29.Controllers
         // GET: Salaries/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+    
+
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FirstName");
             return View();
         }
 
@@ -59,13 +79,13 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SalaryId,Salary1,Tracks,Inventives,MonthOfSalary,TotalSalary,UserId")] Salary salary)
         {
-            if (ModelState.IsValid)
+            if (salary.UserId!=null|| ModelState.IsValid)
             {
                 _context.Add(salary);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", salary.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FirstName", salary.UserId);
             return View(salary);
         }
 
@@ -82,7 +102,7 @@ namespace WebApplication29.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", salary.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FirstName", salary.UserId);
             return View(salary);
         }
 
@@ -98,8 +118,9 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (salary.UserId != null || ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(salary);
@@ -118,7 +139,7 @@ namespace WebApplication29.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", salary.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FirstName", salary.UserId);
             return View(salary);
         }
 

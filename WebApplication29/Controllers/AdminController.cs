@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication29.Models;
 
 namespace WebApplication29.Controllers
@@ -160,7 +161,7 @@ namespace WebApplication29.Controllers
                                        select new joins { salaries = sal, roles = rol, users = us, logins = log };
 
             var multable1 = employeeSalaryRecord.Where(x => x.roles.RoleId == 2 || x.roles.RoleId == 4);
-            return View(multable1.ToList());
+            return View(employeeSalaryRecord.ToList());
 
         }
         public IActionResult DisplaySalaryEmployeeSearch(DateTime startDate, DateTime endDate)
@@ -407,7 +408,55 @@ namespace WebApplication29.Controllers
 
 
 
+        public IActionResult Adds()
+        {
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+            return View();
+        }
 
+        // POST: Logins/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Adds([Bind("LoginId,UserName,Password,ConfimPassword,RoleId")] Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage)
+        {
+            if (login.RoleId != null || ModelState.IsValid)
+            {
+                
+                User user = new User();
+                _context.Add(login);
+
+                var LastId = _context.Logins.OrderByDescending(x => x.LoginId).FirstOrDefault().LoginId;
+                user.FirstName = FirstName;
+                user.LastName = LastName;
+
+                user.Gender = Gender;
+                user.PhoneNumber = PhoneNumber;
+                user.Email = Email;
+                user.Adress = Adress;
+                user.City = City;
+                user.BirthDate = BirthDate;
+                user.UserImage = UserImage;
+                user.LoginId = LastId;
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId", login.RoleId);
+            return View(login);
+        }
+        public IActionResult ContactUsTable()
+
+        {
+            List<ContactU> contactUs = db.ContactUs.ToList();
+
+
+
+            return View(contactUs.ToList());
+
+            return View();  
+        }
         public IActionResult Index()
 
         {

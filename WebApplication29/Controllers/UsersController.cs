@@ -59,7 +59,7 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Gender,Email,PhoneNumber,Adress,City,BirthDate,LoginId,UserImage")] User user)
         {
-            if (ModelState.IsValid)
+            if (user.LoginId != null || ModelState.IsValid)
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
@@ -98,7 +98,7 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (user.LoginId != null || ModelState.IsValid)
             {
                 try
                 {
@@ -118,7 +118,7 @@ namespace WebApplication29.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LoginId"] = new SelectList(_context.Logins, "LoginId", "LoginId", user.LoginId);
+            ViewData["LoginId"] = new SelectList(_context.Logins, "UserName", "UsreName", user.LoginId);
             return View(user);
         }
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication29.Models.Salary>
+﻿@model IEnumerable<WebApplication29.Models.joins>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,22 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Salary1)
+                @Html.DisplayNameFor(model => model.salaries.Salary1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tracks)
+                @Html.DisplayNameFor(model => model.salaries.Tracks)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Inventives)
+                @Html.DisplayNameFor(model => model.salaries.Inventives)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MonthOfSalary)
+                @Html.DisplayNameFor(model => model.salaries.MonthOfSalary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalSalary)
+                @Html.DisplayNameFor(model => model.salaries.TotalSalary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.users.FirstName)
             </th>
             <th></th>
         </tr>
@@ -37,27 +37,27 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Salary1)
+                @Html.DisplayFor(modelItem => item.salaries.Salary1)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tracks)
+                @Html.DisplayFor(modelItem => item.salaries.Tracks)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Inventives)
+                @Html.DisplayFor(modelItem => item.salaries.Inventives)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MonthOfSalary)
+                @Html.DisplayFor(modelItem => item.salaries.MonthOfSalary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalSalary)
+                @Html.DisplayFor(modelItem => item.salaries.TotalSalary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
+                @Html.DisplayFor(modelItem => item.users.FirstName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.SalaryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SalaryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SalaryId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.salaries.SalaryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.salaries.SalaryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.salaries.SalaryId">Delete</a>
             </td>
         </tr>
 }

@@ -9,6 +9,30 @@
      };
 
 }
+<script src="~/jsfiles/FileSaver.js"></script> @*could be downloaded from https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js*@
+<script>
+    function fnExcelReport(id, name) {
+        var tab_text = '<html xmlns: x="urn:schemas-microsoft-com:office:excel">';
+        tab_text = tab_text + '<head><xml><x: ExcelWorkbook><x: ExcelWorksheets><x: ExcelWorksheet>';
+        tab_text = tab_text + '<x: Name>Test Sheet</x: Name>';
+        tab_text = tab_text + '<x: WorksheetOptions><x: Panes></x: Panes></x: WorksheetOptions ></x: ExcelWorksheet > ';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+        tab_text = tab_text + "<table border='1px' style='color:black'>";
+
+        var exportTable = $('#' + id).clone();
+        exportTable.find('th').last().remove();
+        exportTable.find('input').each(function (index, elem) { $(elem).remove(); });
+        exportTable.find('a').each(function (index, elem) { $(elem).remove(); });
+
+        tab_text = tab_text + exportTable.html();
+
+        var fileName = "category" + '.xls';
+        //Save the file
+        var blob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset=utf-8" })
+        window.saveAs(blob, fileName);
+
+    }
+</script>
 
     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -59,7 +83,12 @@
                         <td>@data.salaries.MonthOfSalary</td>
                         <td>@data.salaries.TotalSalary</td>
                
-
+                          <td>
+                            @using (Html.BeginForm("Edit", "Salaries", new { Id = @data.salaries.SalaryId }, FormMethod.Get))
+                            {
+                                <button class="btn btn-primary">edit </button>
+                            }
+                        </td>
                        
                     </tr>
 
@@ -70,15 +99,50 @@
         </tbody>
 
                                 </table>
-                            </div>
+               </div>
                         </div>
                     </div>
+                   
+            <button class="btn btn-primary" onclick="javascript:fnExcelReport('dataTable', 'data')">Export To Excel</button>
+      <input style="margin-left:5px;" type="button" onclick="generate()" class="btn btn-primary"  value="Export To PDF" />
 
-                </div>
-                <!-- /.container-fluid -->
+<script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
 
-            </div>
+<script>
+    function generate() {
+        var doc = new jsPDF("p", "mm", "a2");
+        var htmlstring = '';
+        var tempVarToCheckPageHeight = 0;
+        var pageHeight = 0;
+        pageHeight = doc.internal.pageSize.height;
+        
+var width = doc.internal.pageSize.getWidth();
+        specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            }
+        };
+        margins = {
+            top: 200,
+            bottom: 60,
+            left: 100,
+            right: 100,
+            width: 700,
+           
+        };
+      
+        var y = 20;
+        doc.setLineWidth(3);
 
-   
-</div>
-   
+        doc.autoTable({
+            html: '#dataTable',
+
+        })
+        doc.save('Category.pdf');
+    }
+
+</script>

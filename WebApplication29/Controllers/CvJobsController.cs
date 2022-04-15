@@ -61,7 +61,7 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CvId,UserId,YearsOfExperiance,LastWorkPlace,JobDescription,CategoryId")] CvJob cvJob)
         {
-            if (ModelState.IsValid)
+            if ((cvJob.UserId != null && cvJob.CategoryId != null )|| ModelState.IsValid)
             {
                 _context.Add(cvJob);
                 await _context.SaveChangesAsync();
@@ -102,7 +102,7 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if ((cvJob.UserId != null && cvJob.CategoryId != null) || ModelState.IsValid)
             {
                 try
                 {

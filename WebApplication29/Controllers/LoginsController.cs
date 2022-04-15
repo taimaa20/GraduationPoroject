@@ -59,7 +59,7 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LoginId,UserName,Password,ConfimPassword,RoleId")] Login login)
         {
-            if (ModelState.IsValid)
+            if  (login.RoleId!=null|| ModelState.IsValid)
             {
                 _context.Add(login);
                 await _context.SaveChangesAsync();
@@ -98,7 +98,7 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (login.RoleId != null ||  ModelState.IsValid)
             {
                 try
                 {

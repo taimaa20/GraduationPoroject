@@ -1,0 +1,81 @@
+﻿@model WebApplication29.Models.Login
+
+@{
+     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Login</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Adds">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfimPassword" class="control-label"></label>
+                <input asp-for="ConfimPassword" class="form-control" />
+                <span asp-validation-for="ConfimPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleId" class="control-label"></label>
+                <select asp-for="RoleId" class ="form-control" asp-items="ViewBag.RoleId"></select>
+            </div>
+                   <div class="form-group mb-3">
+                <label class="label" for="FirstName">FirstName</label>
+                <input name="FirstName" id="FirstName" type="text" class="form-control" placeholder="FirstName" required>
+            </div>
+             <div class="form-group mb-3">
+                <label class="label" for="LastName">LastName</label>
+                <input name="LastName" id="LastName" type="text" class="form-control" placeholder="LastName" required>
+            </div>
+                         <div class="form-group mb-3">
+                <label class="label" for="Gender">Gender</label>
+                <input name="Gender" id="Gender" type="text" class="form-control" placeholder="Gender" required>
+            </div>
+                                     <div class="form-group mb-3">
+                <label class="label" for="Email">Gender</label>
+                <input name="Email" id="Email" type="text" class="form-control" placeholder="Email" required>
+            </div>
+                      <div class="form-group mb-3">
+                <label class="label" for="PhoneNumber">PhoneNumber</label>
+                <input name="PhoneNumber" id="PhoneNumber" type="text" class="form-control" placeholder="PhoneNumber" required>
+            </div>
+                          <div class="form-group mb-3">
+                <label class="label" for="Adress">Adress</label>
+                <input name="Adress" id="Adress" type="text" class="form-control" placeholder="Adress" required>
+            </div>
+                                    <div class="form-group mb-3">
+                <label class="label" for="City">City</label>
+                <input name="City" id="City" type="text" class="form-control" placeholder="City" required>
+            </div>
+                                  <div class="form-group mb-3">
+                <label class="label" for="City">BirthDate</label>
+                <input name="BirthDate" id="BirthDate" type="datetime" class="form-control" placeholder="BirthDate" required>
+            </div>
+                                       <div class="form-group mb-3">
+                <label class="label" for="UserImage">UserImage</label>
+                <input name="UserImage" id="UserImage" type="text" class="form-control" placeholder="UserImage" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

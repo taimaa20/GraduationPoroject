@@ -59,7 +59,7 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReviewId,ReviewRange,ReviewText,UserServiceId")] Review review)
         {
-            if (ModelState.IsValid)
+            if (review.UserService!=null|| ModelState.IsValid)
             {
                 _context.Add(review);
                 await _context.SaveChangesAsync();
@@ -98,7 +98,7 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (review.UserService != null || ModelState.IsValid)
             {
                 try
                 {

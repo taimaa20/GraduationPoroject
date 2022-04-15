@@ -59,7 +59,7 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MessageId,MessageText,SenderName,MessageTitle,UserId")] Message message)
         {
-            if (ModelState.IsValid)
+            if (message.UserId!=null|| ModelState.IsValid)
             {
                 _context.Add(message);
                 await _context.SaveChangesAsync();
@@ -98,7 +98,7 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (message.UserId != null || ModelState.IsValid)
             {
                 try
                 {

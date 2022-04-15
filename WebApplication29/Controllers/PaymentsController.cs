@@ -57,9 +57,9 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,UserId")] Payment payment)
+        public async Task<IActionResult> Create([Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,UserId,PaymentDate")] Payment payment)
         {
-            if (ModelState.IsValid)
+            if (payment.UserId != null || ModelState.IsValid)
             {
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
@@ -91,14 +91,14 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,UserId")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,UserId,PaymentDate")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (payment.UserId != null || ModelState.IsValid)
             {
                 try
                 {

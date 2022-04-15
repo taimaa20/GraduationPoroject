@@ -61,7 +61,7 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserServiceId,ServiceId,Date,Status,UserId")] UserService userService)
         {
-            if (ModelState.IsValid)
+            if ((userService.ServiceId != null && userService.UserId != null) || ModelState.IsValid)
             {
                 _context.Add(userService);
                 await _context.SaveChangesAsync();
@@ -102,7 +102,7 @@ namespace WebApplication29.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if ((userService.ServiceId != null && userService.UserId != null) || ModelState.IsValid)
             {
                 try
                 {

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WebApplication29.Models.ContactU>
+
+@{
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+ 
+       string[] TableHeaders = new string[]{"Full Name","Eamil" ,"Message Text"
+         
+     };
+
+}
+    
+            
+                      
+                       
+    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">ConatcatUs Table </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                                            @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+            @{
+                
+                 @if (Model != null)
+            {
+                foreach (var data in Model)
+             
+                {
+
+                    <tr>
+                        <td>@data.FullName </td>
+                        <td>@data.Email </td>
+                      <td>@data.MessageText </td>
+
+                       
+                    </tr>
+
+
+                }
+            }
+            }
+                                    </tbody>
+                         
+                                </table>
+                            </div>
+                        </div>
+                    </div>

@@ -1,0 +1,221 @@
+﻿@model IEnumerable<WebApplication29.Models.Message>
+
+@{
+
+       Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+    var CountOfServicesToday= ViewBag.CountOfServicesToday ;
+
+    var CountOfServices = ViewBag.CountOfServices;
+    var countOFCustomer = ViewBag.countOFCustomer;
+    var countOFAllUsers = ViewBag.countOFAllUsers;
+        string[] TableHeaders = new string[]{"","ServiceName","Price","Description"
+          
+     };
+
+
+}
+
+   
+<style type="text/css">
+.edit {
+    margin-left: 25rem;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    /* margin: 0px 0; */
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #b34343;
+    color: #ffffff;
+    text-align: left;
+    font-size: 1.2em;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #72777a;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #1d629b;
+}
+
+.tableFixHead {
+    overflow-y: visible;
+    overflow-x: auto;
+    height: 100%;
+    width: 110rem;
+}
+
+.tableFixHead tbody th {
+    position: absolute;
+    top: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.edit {
+    margin-left: 25rem;
+}
+
+
+/* .nav-link.active {
+    margin-top: 10px;
+    margin-left: 0%;
+    padding-left: 5px;
+} */
+
+.img {
+    padding: 5px;
+    margin-left: 50px;
+}
+
+.colorbtn {
+    background-color: #383030;
+    color: gainsboro;
+    font-size: 15px;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
+.upleft {
+    border-top-left-radius: 4px;
+}
+
+.upright {
+    border-top-right-radius: 4px;
+}
+
+
+/* h5 {
+    margin-bottom: 0%;
+    border-radius: 2rem;
+    background-color: #345B63;
+} */
+
+.card {
+    margin-left: 20px;
+    border-radius: 7px;
+    /* color: ghostwhite; */
+    border-color: rgba(0, 0, 0, 0.15);
+    /* border-width: 3px; */
+}
+
+.card-header:first-child {
+    margin-bottom: 0%;
+    color: #ffffff;
+    border-radius: 4px;
+    background-color: #383030;
+    font-size: 1.3em;
+    padding: 10px;
+}
+
+td {
+    padding: 15rem;
+}
+
+body {
+    background-color: #E6EAF5;
+    font-family: 'Roboto', sans-serif
+}
+
+
+/* .card {
+    width: 350px;
+    border: none;
+    border-radius: 20px;
+    background-color: #597AFD;
+    size: 50px;
+} */
+
+h6 {
+    color: #E5F3FF;
+    font-size: 15px;
+}
+
+.text {
+    color: #B2C9FF
+}
+
+.card {
+ 
+    border: none;
+    border-radius: 20px;
+    background-color: #2f2e41;
+    size: 50px;
+    font-size: 25px;
+
+}
+
+a {
+    color: blanchedalmond;
+}
+
+.footer {
+    color: black;
+}
+
+p {
+    color: black;
+}
+
+
+</style>
+             @{
+                
+                 @if (Model != null)
+            {
+                foreach (var data in Model)
+
+        {
+<div class="container" >
+       <div class="row" style="margin-bottom:20rem;">
+
+            <div>
+                     <h2 class="pageheader-title" style="margin-left:45px;">Messages Inbox</h2>
+                <div class="container d-flex justify-content" >
+                    <div class="card mt-5 p-3">
+                        <div class="media"> <i class="fa fa-bell" aria-hidden="true" style="padding:25px ;"></i>
+                            <div class="media-body">
+                                <h4>Title :
+                                    <a class="mt-2 mb-0" style="color:cornsilk;">@data.MessageTitle</a>
+                                </h4>
+                                <h4>Message:
+                                    <a class="mt-2 mb-0" style="color:cornsilk;">@data.MessageText
+                                    </a>
+                                </h4>
+                                <h4>Employee Name: <a class="mt-2 mb-0" style="color:cornsilk;">@data.SenderName</a> </h4>
+                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>}}}
+
+       
+     
+   
+       

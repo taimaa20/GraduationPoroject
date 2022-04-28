@@ -14,7 +14,8 @@ namespace WebApplication29.Models
 
         public Message ?message { get; set; }
         public Payment ? payment { get; set; }
-       
+
+        public Category? categories { get; set; }
 
     }
 }

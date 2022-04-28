@@ -265,6 +265,7 @@ namespace WebApplication29.Controllers
 
 
             var multable1 = AllServices.Where(x => x.userService.Date >= startDate && x.userService.Date <= endDate);
+          
             return View(multable1);
         }
         public IActionResult UserServicesStatus(string ServStatus)
@@ -455,7 +456,7 @@ namespace WebApplication29.Controllers
 
             return View(contactUs.ToList());
 
-            return View();  
+          
         }
         public IActionResult Index()
 

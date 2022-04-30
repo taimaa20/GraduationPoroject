@@ -8,7 +8,7 @@
     var CountOfServices = ViewBag.CountOfServices;
     var countOFCustomer = ViewBag.countOFCustomer;
     var countOFAllUsers = ViewBag.countOFAllUsers;
-        string[] TableHeaders = new string[]{"","ServiceName","Price","Description"
+        string[] TableHeaders = new string[]{"","ServiceName","Price","Description","MessageDate"
           
      };
 
@@ -169,7 +169,7 @@ h6 {
 }
 
 a {
-    color: blanchedalmond;
+    color: #4e73df;
 }
 
 .footer {
@@ -182,19 +182,35 @@ p {
 
 
 </style>
-             @{
-                
-                 @if (Model != null)
-            {
-                foreach (var data in Model)
+        
+     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="EmployeeMessage">
+                <div class="input-group">
+                      <label> date</label>
+                            
+                      <input input type="date" name="startDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        
+                          <input type="submit" value="search"  class="btn btn-primary " />   
+                                                                                                   <h6 style="padding-top: 10px;padding-left: 10px;font-size: 20px; ">
+    <a asp-action="EmployeeMessage">get all</a>
+</h6>
+              
+                        </div> 
 
-        {
+                 </form>
+
 <div class="container" >
        <div class="row" style="margin-bottom:20rem;">
 
             <div>
                      <h2 class="pageheader-title" style="margin-left:45px;">Messages Inbox</h2>
+                                    @{
+                
+                 @if (Model != null)
+            {
+                foreach (var data in Model){
+
                 <div class="container d-flex justify-content" >
+          
                     <div class="card mt-5 p-3">
                         <div class="media"> <i class="fa fa-bell" aria-hidden="true" style="padding:25px ;"></i>
                             <div class="media-body">
@@ -206,14 +222,14 @@ p {
                                     </a>
                                 </h4>
                                 <h4>Employee Name: <a class="mt-2 mb-0" style="color:cornsilk;">@data.SenderName</a> </h4>
-                     
+                         <h4>Date: <a class="mt-2 mb-0" style="color:cornsilk;">@data.MessageDate</a> </h4>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}}}
             </div>
             </div>
-        </div>}}}
+        </div>
 
        
      

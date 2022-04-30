@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication29.Models;
@@ -13,12 +14,14 @@ namespace WebApplication29.Controllers
             _context = context;
         }
         HomeServicesNewContext db = new HomeServicesNewContext();
-        // string uid = "UserId";
+       
         public IActionResult Index()
         {
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
             //int? userId = HttpContext.Session.GetInt32(uid);
             // ViewBag.id = HttpContext.Session.GetInt32(uid);
-            ViewBag.CountOfServices = _context.Services.Where(x => x.UserId == 4).Count();
+            ViewBag.CountOfServices = _context.Services.Where(x => x.UserId == employeeid).Count();
             List<Service> services = db.Services.ToList();
             List<Category> categories = db.Categories.ToList();
             List<User> user = db.Users.ToList();
@@ -35,25 +38,33 @@ namespace WebApplication29.Controllers
 
 
             var multable1 = AllServices.Where(x => x.userService.Date >= DateTime.Today);
-            ViewBag.CountOfServicesToday = multable1.Where(x => x.services.UserId == 3).Count();
+            ViewBag.CountOfServicesToday = multable1.Where(x => x.services.UserId == employeeid).Count();
             ViewBag.countOFAllUsers = _context.Users.Count();
 
 
-            ViewBag.countOFCustomer = _context.Logins.Where(x => x.RoleId == 3).Count();
+            ViewBag.countOFCustomer = _context.Logins.Where(x => x.RoleId == 5).Count();
 
-            ViewBag.countOFMessages = _context.Messages.Where(x => x.UserId == 3).Count();
+            ViewBag.countOFMessages = _context.Messages.Where(x => x.UserId == employeeid && x.MessageDate==DateTime.Today).Count();
             EmployeeOwnServices();
             return View();
         }
-       
-        public async Task<IActionResult> Profile(int? id)
+        string id = "id";
+        public IActionResult Eid()
         {
-            if (id == null)
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
+            return View(employeeid);
+                }
+            public async Task<IActionResult> Profile( )
+        {
+            string id = "id";
+            int? empolyeeid = HttpContext.Session.GetInt32(id);
+            if (empolyeeid == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(empolyeeid);
             if (user == null)
             {
                 return NotFound();
@@ -101,8 +112,8 @@ namespace WebApplication29.Controllers
         public IActionResult SalarySlip()
         {
           //  GymContext gym = new GymContext();
-         //  int? employeeid = HttpContext.Session.GetInt32(id);
-        // ViewBag.id = HttpContext.Session.GetInt32(id);
+           int? employeeid = HttpContext.Session.GetInt32(id);
+         ViewBag.id = HttpContext.Session.GetInt32(id);
 
             List<User> users = db.Users.ToList();
         List<Salary> salaries = db.Salaries.ToList();
@@ -118,7 +129,7 @@ namespace WebApplication29.Controllers
             
            
 
-        var multable1 = multable.Where(x => x.salaries.UserId == 3 && x.salaries.MonthOfSalary.Month==DateTime.Today.Month);
+        var multable1 = multable.Where(x => x.salaries.UserId == employeeid && x.salaries.MonthOfSalary.Month==DateTime.Today.Month);
             
         
             return View(multable1.ToList());
@@ -130,6 +141,8 @@ namespace WebApplication29.Controllers
         DateTime startDate =  DateTime.Today;
         public IActionResult EmployeeServices( DateTime  startDate)
         {
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
 
             List<Service> services = db.Services.ToList();
 
@@ -151,11 +164,13 @@ namespace WebApplication29.Controllers
                                                  select new joins { users = us, services = ser, userService = usSer };
        
 
-            var multable1 = AllServices.Where(x => x.services.UserId == 3 && x.userService.Date>=startDate);
+            var multable1 = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date>=startDate);
             return View(multable1.ToList());
         }
         public IActionResult UserServicesName(string UserName)
         {
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
 
             List<Service> services = db.Services.ToList();
 
@@ -176,7 +191,7 @@ namespace WebApplication29.Controllers
 
                               select new joins { users = us, services = ser, userService = usSer };
 
-       
+            AllServices = AllServices.Where(x => x.services.UserId== employeeid);
             if (!String.IsNullOrEmpty(UserName))
             {
                 AllServices = AllServices.Where(x => x.users.FirstName!.Contains(UserName) || x.users.LastName!.Contains(UserName));
@@ -186,8 +201,10 @@ namespace WebApplication29.Controllers
         }
         public IActionResult EmployeeOwnServices()
         {
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
             List<Service> services = db.Services.ToList();
-            services=services.Where(x=>x.UserId==3).ToList();
+            services=services.Where(x=>x.UserId== employeeid).ToList();
             return View(services.ToList());
         }
         public IActionResult MounthelyEmployeeServices(DateTime startDate ,DateTime endDate)
@@ -211,16 +228,25 @@ namespace WebApplication29.Controllers
                               from ser in table2.ToList()
 
                               select new joins { users = us, services = ser, userService = usSer };
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
 
-
-            var multable1 = AllServices.Where(x => x.services.UserId == 3 && x.userService.Date >= startDate&&x.userService.Date<=endDate);
+            var multable1 = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date >= startDate&&x.userService.Date<=endDate);
             return View(multable1.ToList());
         }
-        public IActionResult EmployeeMessage()
+      
+        public IActionResult EmployeeMessage(DateTime? startDate )
         {
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
             List<Message> messages = db.Messages.ToList();
-            messages=messages.Where(x=>x.UserId == 3).ToList();
-            return View(messages.ToList());
+            messages=messages.Where(x=>x.UserId == employeeid).ToList();
+         
+            if (startDate.HasValue)
+            {
+                messages = messages.Where(x => x.MessageDate == startDate).ToList();
+            }
+                return View(messages.ToList());
         }
     }
 }

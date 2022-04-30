@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MessageTitle)
             </th>
+             <th>
+                @Html.DisplayNameFor(model => model.MessageDate)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
@@ -38,6 +41,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MessageTitle)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.MessageDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserId)

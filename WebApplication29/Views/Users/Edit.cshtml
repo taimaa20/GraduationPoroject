@@ -58,11 +58,11 @@
                 <select asp-for="LoginId" class="form-control" asp-items="ViewBag.LoginId"></select>
                 <span asp-validation-for="LoginId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserImage" class="control-label"></label>
-                <input asp-for="UserImage" class="form-control" />
-                <span asp-validation-for="UserImage" class="text-danger"></span>
-            </div>
+         
+              <div class="form-group">
+<label asp-for="ImageFile" class="controllabel"></label>
+<input asp-for="ImageFile" accept="image/*"required/>
+<span asp-validation-for="ImageFile"class="text-danger"></span>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

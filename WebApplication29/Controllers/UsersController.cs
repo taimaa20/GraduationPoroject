@@ -13,11 +13,15 @@ namespace WebApplication29.Controllers
     public class UsersController : Controller
     {
         private readonly HomeServicesNewContext _context;
+        private IWebHostEnvironment _hostEnvironment;
 
-        public UsersController(HomeServicesNewContext context)
+
+        public UsersController(HomeServicesNewContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
+
 
         // GET: Users
         public async Task<IActionResult> Index()
@@ -57,13 +61,29 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Gender,Email,PhoneNumber,Adress,City,BirthDate,LoginId,UserImage")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Gender,Email,PhoneNumber,Adress,City,BirthDate,LoginId,UserImage,ImageFile")] User user)
         {
             if (user.LoginId != null || ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (user.ImageFile != null)
+                {
+                    string wRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
+                    string path = Path.Combine(wRootPath + "/Image/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+
+                        await user.ImageFile.CopyToAsync(fileStream);
+                    }
+                    user.UserImage = fileName;
+                    _context.Add(user); //add object to table
+                  await _context.SaveChangesAsync(); //saveoepration
+return RedirectToAction(nameof(Index)); // return to Index
+}
+                else
+                {
+                }
+           
             }
             ViewData["LoginId"] = new SelectList(_context.Logins, "LoginId", "LoginId", user.LoginId);
             return View(user);

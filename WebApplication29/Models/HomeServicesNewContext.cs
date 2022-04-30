@@ -131,6 +131,8 @@ namespace WebApplication29.Models
             {
                 entity.ToTable("Message");
 
+                entity.Property(e => e.MessageDate).HasColumnType("date");
+
                 entity.Property(e => e.MessageText)
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -156,9 +158,9 @@ namespace WebApplication29.Models
                 entity.Property(e => e.CardNumber)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-                entity.Property(e => e.PaymentDate)
-                   .HasColumnType("datetime")
-                   .HasColumnName("paymentDate");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("date");
+
                 entity.Property(e => e.PaymentType)
                     .HasMaxLength(50)
                     .IsUnicode(false);

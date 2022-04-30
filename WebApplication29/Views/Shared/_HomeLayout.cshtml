@@ -32,33 +32,27 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="~/Bootstrap/img/logo.png" alt="logo"/></a>
+                    <a class="navbar-brand"  asp-action="HomeIndex"><img src="~/Bootstrap/img/logo.png" alt="logo"/></a>
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li> 
-							 <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">About Us <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        <li class="active"><a  asp-action="HomeIndex">Home</a></li> 
+				
+                       <li><a  asp-action="AboutUs">AboutUs</a></li> 
+             
+						<li><a  asp-action="Services">Services</a></li> 
+                        <li><a asp-action="Porifilo">Portfolio</a></li>
+                        <li><a asp-action="Pricing">Pricing</a></li>
+                        <li><a asp-action="ContactUs">Contact</a></li>
+						 <li><a asp-action="Login" asp-controller="LoginAndSession">Log in</a></li>
+                        
+                        <!--<ul class="dropdown-menu">
                             <li><a href="about.html">Company</a></li>
                             <li><a href="#">Our Team</a></li>
                             <li><a href="#">News</a></li> 
                             <li><a href="#">Investors</a></li>
-                        </ul>
-                    </li>
-						<li><a href="services.html">Services</a></li> 
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-						 <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Log in <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="about.html">Company</a></li>
-                            <li><a href="#">Our Team</a></li>
-                            <li><a href="#">News</a></li> 
-                            <li><a href="#">Investors</a></li>
-                        </ul>
-                    </li>
+                        </ul>-->
+                    
                     </ul>
                 </div>
             </div>
@@ -128,9 +122,13 @@
 				<div class="col-lg-6">
 					<div class="copyright">
 						<p>
-							<span>&copy; Home Services 2018 All right reserved. <a href="http://webthemez.com/tag/free" target="_blank">Free Websites</a> By WebThemez</a>
+							 &copy; Home Services Company
+							  <span id="copyright">
+        <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+    </span> <a href="http://webthemez.com/tag/free" target="_blank"> All right reserved.</a> By our company</a>
 						</p>
 					</div>
+
 				</div>
 				<div class="col-lg-6">
 					<ul class="social-network">

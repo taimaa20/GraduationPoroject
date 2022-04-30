@@ -66,7 +66,7 @@
 
                     <tr>
                         <td>@data.UserId </td>
-                        <td>@data.UserImage </td>
+                      <img src=@Url.Content("~/Image/" + data.UserImage) asp-appendversion="true" class="poster" width="100" height="400"/>
                         <td>@data.FirstName </td>
 
                         <td>@data.LastName </td>

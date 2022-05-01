@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Adds">
+        <form asp-action="Adds" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
@@ -28,10 +28,7 @@
                 <input asp-for="ConfimPassword" class="form-control" />
                 <span asp-validation-for="ConfimPassword" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="RoleId" class="control-label"></label>
-                <select asp-for="RoleId" class ="form-control" asp-items="ViewBag.RoleId"></select>
-            </div>
+        
                    <div class="form-group mb-3">
                 <label class="label" for="FirstName">FirstName</label>
                 <input name="FirstName" id="FirstName" type="text" class="form-control" placeholder="FirstName" required>
@@ -41,11 +38,22 @@
                 <input name="LastName" id="LastName" type="text" class="form-control" placeholder="LastName" required>
             </div>
                          <div class="form-group mb-3">
-                <label class="label" for="Gender">Gender</label>
-                <input name="Gender" id="Gender" type="text" class="form-control" placeholder="Gender" required>
+                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input type="radio" value="male" type="radio" checked="checked" name="Gender" id="Gender">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input type="radio" name="Gender" id="Gender" value="female"> 
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
             </div>
                                      <div class="form-group mb-3">
-                <label class="label" for="Email">Gender</label>
+                <label class="label" for="Email">Email</label>
                 <input name="Email" id="Email" type="text" class="form-control" placeholder="Email" required>
             </div>
                       <div class="form-group mb-3">
@@ -61,12 +69,16 @@
                 <input name="City" id="City" type="text" class="form-control" placeholder="City" required>
             </div>
                                   <div class="form-group mb-3">
-                <label class="label" for="City">BirthDate</label>
-                <input name="BirthDate" id="BirthDate" type="datetime" class="form-control" placeholder="BirthDate" required>
-            </div>
+               <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        <input class="input--style-4 js-datepicker" type="date" name="BirthDate" id="BirthDate" required >
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>   </div>
                                        <div class="form-group mb-3">
-                <label class="label" for="UserImage">UserImage</label>
-                <input name="UserImage" id="UserImage" type="text" class="form-control" placeholder="UserImage" required>
+                <label class="label" for="ImageFile">ImageFile</label>
+                <input name="ImageFile"  id="ImageFile" type="file" class="form-control" placeholder="ImageFile" accept="image/*" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -75,7 +87,4 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

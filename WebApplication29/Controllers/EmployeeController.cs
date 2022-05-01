@@ -9,9 +9,13 @@ namespace WebApplication29.Controllers
     public class EmployeeController : Controller
     {
         private readonly HomeServicesNewContext _context;
-        public EmployeeController(HomeServicesNewContext context)
+        private IWebHostEnvironment _hostEnvironment;
+
+
+        public EmployeeController(HomeServicesNewContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
         HomeServicesNewContext db = new HomeServicesNewContext();
        
@@ -78,9 +82,11 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Profile(int id, [Bind("UserId,FirstName,LastName,Gender,Email,PhoneNumber,Adress,City,BirthDate,LoginId,UserImage")] User user)
+        public async Task<IActionResult> Profile([Bind("UserId,FirstName,LastName,Gender,Email,PhoneNumber,Adress,City,BirthDate,LoginId,UserImage,ImageFile")] User user)
         {
-            if (id != user.UserId)
+            string id = "id";
+            int? empolyeeid = HttpContext.Session.GetInt32(id);
+            if (empolyeeid != user.UserId)
             {
                 return NotFound();
             }
@@ -89,8 +95,25 @@ namespace WebApplication29.Controllers
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    if (user.ImageFile != null)
+                    {
+                        string wRootPath = _hostEnvironment.WebRootPath;
+                        string fileName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
+                        string path = Path.Combine(wRootPath + "/Image/", fileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+
+                            await user.ImageFile.CopyToAsync(fileStream);
+                        }
+                        user.UserImage = fileName;
+                        _context.Update(user);
+                        await _context.SaveChangesAsync();
+                         // return to Index
+                    }
+                    else
+                    {
+                    }
+                  
                 }
                 catch (DbUpdateConcurrencyException)
                 {

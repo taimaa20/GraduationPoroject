@@ -140,7 +140,9 @@
                                     <tr>
                                         <td>@index </td>
                                            <td>@data.UserId </td>
-                        <td>@data.UserImage </td>
+                    
+ <td>  <img src=@Url.Content("~/Image/" + @data.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
+
                         <td>@data.FirstName </td>
 
                         <td>@data.LastName </td>

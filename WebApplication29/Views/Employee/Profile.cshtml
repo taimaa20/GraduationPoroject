@@ -27,9 +27,10 @@
 		<div class="account-settings">
 			<div class="user-profile">
 				<div class="user-avatar">
-					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+				
+					 <img src=@Url.Content("~/Image/" + Model.UserImage) asp-appendversion="true" class="poster"/>
 				</div>
-				<h5 class="user-name">Yuki Hayashi</h5>
+				<h5 class="user-name">@Model.FirstName @Model.LastName</h5>
 				<h6 class="user-email"></h6>
 				     		<label asp-for="Email" class="control-label">Email</label>
 			<input disabled   class="form-control" asp-for="Email"  placeholder="Enter full name">
@@ -42,7 +43,7 @@
 </div>
  
 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-	 <form asp-action="Profile">
+	 <form asp-action="Profile" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UserId" />
 <div class="card h-100">
@@ -119,11 +120,11 @@
                 <select asp-for="LoginId" class="form-control" asp-items="ViewBag.LoginId"></select>
                 <span asp-validation-for="LoginId" class="text-danger"></span>
             </div>
-            <div hidden class="form-group">
-                <label asp-for="UserImage" class="control-label"></label>
-                <input  asp-for="UserImage" class="form-control" />
-                <span  asp-validation-for="UserImage" class="text-danger"></span>
-            </div>
+           <div class="form-group">
+<label asp-for="ImageFile" class="controllabel"></label>
+<input asp-for="ImageFile" name="ImageFile" accept="image/*"required/>
+<span asp-validation-for="ImageFile"class="text-danger"></span>
+</div>
 		</div>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

@@ -1,0 +1,201 @@
+﻿@model WebApplication29.Models.Login
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link href="~/RegistrationFile/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/RegistrationFile/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="~/RegistrationFile/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/RegistrationFile/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/RegistrationFile/css/main.css" rel="stylesheet" media="all">
+</head>
+
+
+    <div class="page-wrapper  p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title" style=" text-align: center;">Sign up</h2>
+                    <form  asp-action="Regstration" enctype="multipart/form-data" onsubmit ="verifyPassword()">
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">UserName</label>
+                                    <input class="input--style-4" type="text" asp-for="UserName" required>
+                                      <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                  <label class="label">Password</label>
+                                    <input class="input--style-4" type="password" id="Password" asp-for="Password" required>
+                                 <span asp-validation-for="Password" class="text-danger"></span>
+                             </div>
+                            </div>
+                        </div>
+                           <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Confim your Password</label>
+                                    <input class="input--style-4" type="password"id="Password2" asp-for="ConfimPassword" required >
+                                 <span asp-validation-for="ConfimPassword" class="text-danger"></span>
+                             </div>
+                            </div>
+                          <div class="col-2">
+                              <!--  <div class="input-group">
+                                    <label class="label">role</label>
+                                    <input class="input--style-4" type="text" asp-for="RoleId" >
+                                </div>-->
+                            </div>
+<hr style="width:100%;margin: 30px,0px,30px,0px;" ,="" size="40" color="black">                            
+                        </div>
+                              <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                     <label class="label" for="FirstName">FirstName</label>
+                                    <input name="FirstName" id="FirstName" type="text" class="input--style-4" placeholder="FirstName" required>
+                                </div>
+                            </div>
+                           
+                            <div class="col-2">
+                                <div class="input-group">
+                                        <label class="label" for="LastName">LastName</label>
+                                    <input name="LastName" id="LastName" type="text" class="input--style-4" placeholder="LastName" required>
+                                </div>
+                            </div>
+                        </div>
+                           <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                             <label class="label" for="City">City</label>
+                                    <input name="City" id="City" type="text" class="input--style-4" placeholder="City" required>
+                                                              </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label" for="Adress">Adress</label>
+                                    <input name="Adress" id="Adress" type="text" class="input--style-4" placeholder="Adress" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        <input class="input--style-4 js-datepicker" type="text" name="BirthDate" id="BirthDate" required >
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input type="radio" value="male" type="radio" checked="checked" name="Gender" id="Gender">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input type="radio" name="Gender" id="Gender" value="female"> 
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    <input class="input--style-4" id="Email" type="email" name="email" placeholder="Email" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Phone Number</label>
+                                    <input class="input--style-4" id="PhoneNumber" type="text" name="PhoneNumber" placeholder="PhoneNumber" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">ImageFile</label>
+                                    <input class="input--style-4" type="file"  name="ImageFile" accept="image/*"required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="~/RegistrationFile/vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="~/RegistrationFile/vendor/select2/select2.min.js"></script>
+    <script src="~/RegistrationFile/vendor/datepicker/moment.min.js"></script>
+    <script src="~/RegistrationFile/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/RegistrationFile/js/global.js"></script>
+
+
+<!-- end document-->
+<script>  /*
+function verifyPassword() {  
+
+  //check empty password field  
+ 
+  //check empty password field  
+  var pw1 = document.getElementById("Password");  
+  var pw2 = document.getElementById("Password2");  
+  if(pw1 != pw2)  
+  {   
+    alert("Passwords did not match");  
+    pw1.innerHTML="";
+  }
+  if(pw == "") {  
+     document.getElementById("message").innerHTML = "**Fill the password please!";  
+     return false;  
+  }  
+   
+ //minimum password length validation  
+  if(pw.length < 8) {  
+     document.getElementById("message").innerHTML = "**Password length must be atleast 8 characters";  
+     return false;  
+  }  
+  
+//maximum length of password validation  
+  if(pw.length > 15) {  
+     document.getElementById("message").innerHTML = "**Password length must not exceed 15 characters";  
+     return false;  
+  } else {  
+     alert("Password is correct");  
+  }  
+}  */
+</script>  

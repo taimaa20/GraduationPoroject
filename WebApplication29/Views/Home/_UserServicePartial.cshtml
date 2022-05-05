@@ -1,0 +1,57 @@
+﻿@model WebApplication29.Models.UserService
+
+@{
+	 var ServiceId = ViewBag.ServiceId;
+
+	  var Description = ViewBag.Description;
+
+	  var ServiceName = ViewBag.ServiceName;
+	    var Price = ViewBag.Price;
+		    var UserImage = ViewBag.UserImage;
+	   Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+ <section id="content">
+	
+	<div id="placeholderhere">
+	<div class="container">
+			<div class="row">
+				 <div class="skill-home"> <div class="skill-home-solid clearfix" style="display: flex; flex-wrap: wrap; flex-direction: row; align-content: flex-start;">
+	
+	
+		<div class="col-md-3 text-center"> 
+		<div class="box"> 
+		<img src="~/Image/@UserImage" asp-append-version="true" alt=""></i></span> <div class="box-area">
+		<h3>@ServiceName</h3> <p>@Description</p><h3>
+							@ServiceId
+							</h3>
+								<h3>price:@Price jd</h3>
+						
+</div>
+		</div></div>
+		      		
+          <form asp-action="UserServiceAdd">
+
+		           
+					
+					<input type="hidden" name="ServiceId" id="ServiceId" class="form-control" placeholder="ServiceId"  readonly="readonly" value="@ViewBag.ServiceId" required>
+					<input type="hidden" name="Description" id="Description" class="form-control" placeholder="Description"  readonly="readonly" value="@ViewBag.Description" required>
+					<input type="hidden" name="ServiceId" id="ServiceName" class="form-control" placeholder="ServiceName"  readonly="readonly" value="@ViewBag.ServiceName" required>
+					 <div class="form-group mb-3">
+		            	<h3>Select the  date </h3>
+		              <input type="date" name="Date" id="Date" class="form-control" placeholder="Date" required>
+		            </div>
+                       	 <button type="submit" style="border-radius:15px; border:5px;">Save </button>
+                    
+				
+								</form>
+      </div></div></div></div>
+		</div></section>
+
+    <script src="~/Modal/js/jquery.min.js"></script>
+    <script src="~/Modal/js/popper.js"></script>
+    <script src="~/Modal/js/bootstrap.min.js"></script>
+    <script src="~/Modal/js/main.js"></script>
+		<style>
+		button {color: #ffffff;text-decoration: none;font-size: 13px;background: #055999;padding: 7px 20px;margin-top: 10px;display: inline-block;}
+	</style>

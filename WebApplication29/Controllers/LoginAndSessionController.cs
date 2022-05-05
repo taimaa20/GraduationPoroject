@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 using WebApplication29.Models;
 
 namespace WebApplication29.Controllers
@@ -8,11 +9,13 @@ namespace WebApplication29.Controllers
     {
         private readonly HomeServicesNewContext _context;
         private IWebHostEnvironment _hostEnvironment;
-        public LoginAndSessionController(HomeServicesNewContext context,IWebHostEnvironment hostEnvironment)
+        private readonly IToastNotification _toastNotification;
+        public LoginAndSessionController(HomeServicesNewContext context,IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
-        
+            _toastNotification = toastNotification;
+
         }
         HomeServicesNewContext db = new HomeServicesNewContext();
         public IActionResult Index()
@@ -70,15 +73,16 @@ namespace WebApplication29.Controllers
                         {
 
                             HttpContext.Session.SetInt32("id", id.users.UserId);
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "HomeIndex");
                         }
 
                 }
 
-
+                
 
 
             }
+            _toastNotification.AddErrorToastMessage("the username or password is incorrect");
             return View();
         }
         
@@ -139,7 +143,7 @@ namespace WebApplication29.Controllers
         {
             HttpContext.Session.Clear();
 
-            return RedirectToAction("Login", "LoginAndSessionController");
+            return RedirectToAction("Login", "LoginAndSession");
 
         }
 

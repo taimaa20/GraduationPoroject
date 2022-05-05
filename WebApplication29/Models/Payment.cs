@@ -9,9 +9,9 @@ namespace WebApplication29.Models
         public string PaymentType { get; set; } = null!;
         public double? PaymentAmount { get; set; }
         public string CardNumber { get; set; } = null!;
-        public int UserId { get; set; }
         public DateTime PaymentDate { get; set; }
+        public int? UserServiceId { get; set; }
 
-        public virtual User User { get; set; } = null!;
+        public virtual UserService? UserService { get; set; }
     }
 }

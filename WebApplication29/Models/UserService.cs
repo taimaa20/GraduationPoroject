@@ -7,6 +7,7 @@ namespace WebApplication29.Models
     {
         public UserService()
         {
+            Payments = new HashSet<Payment>();
             Reviews = new HashSet<Review>();
         }
 
@@ -14,10 +15,11 @@ namespace WebApplication29.Models
         public int ServiceId { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; } = null!;
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         public virtual Service Service { get; set; } = null!;
         public virtual User User { get; set; } = null!;
+        public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
 }

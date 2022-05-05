@@ -23,6 +23,8 @@ namespace WebApplication29.Controllers
             //FetchData();
 
 
+           
+
             List<User> user = db.Users.ToList();
             var getuser = from m in _context.Users
                           select m;
@@ -370,16 +372,23 @@ namespace WebApplication29.Controllers
 
 
             List<Payment> payment = db.Payments.ToList();
+            List<Service> services = db.Services.ToList();
 
+            List<UserService> userServices = db.UserServices.ToList();
             List<User> user = db.Users.ToList();
 
             var AllServices = from pay in payment
-                              join us in user on pay.UserId equals us.UserId into table1
-                              from us in table1.ToList()
+                              join usrser in userServices on pay.UserServiceId equals usrser.UserServiceId into table1
+                              from usrser in table1.ToList()
+                              join usr in user on usrser.UserId equals usr.UserId into table2
+                              from usr in table2.ToList()
+                              join ser in services on usrser.ServiceId equals ser.ServiceId into table3
+                              from ser in table3.ToList()
 
 
 
-                              select new joins { users = us, payment = pay };
+
+                              select new joins { users = usr, payment = pay, userService = usrser,services=ser };
 
             if (!String.IsNullOrEmpty(UName))
             {
@@ -397,20 +406,23 @@ namespace WebApplication29.Controllers
             List<Payment> payment = db.Payments.ToList();
 
             List<User> user = db.Users.ToList();
+            List<UserService> userServices = db.UserServices.ToList();
 
             var AllServices = from pay in payment
-                              join us in user on pay.UserId equals us.UserId into table1
-                              from us in table1.ToList()
+                              join usrser in userServices on pay.UserServiceId equals usrser.UserServiceId into table1
+                              from usrser in table1.ToList()
+                              join usr in user on usrser.UserId equals usr.UserId into table2
+                              from usr in table2.ToList()
 
 
 
-                              select new joins { users = us, payment = pay };
+                              select new joins {  payment = pay, userService = usrser, users = usr };
             var multable1 = AllServices.Where(x => x.payment.PaymentDate >= startDate && x.payment.PaymentDate <= endDate);
 
 
             return View(multable1);
         }
-
+       
 
 
         public IActionResult Adds()

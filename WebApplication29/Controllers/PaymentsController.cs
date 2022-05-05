@@ -22,7 +22,7 @@ namespace WebApplication29.Controllers
         // GET: Payments
         public async Task<IActionResult> Index()
         {
-            var homeServicesNewContext = _context.Payments.Include(p => p.User);
+            var homeServicesNewContext = _context.Payments.Include(p => p.UserService);
             return View(await homeServicesNewContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace WebApplication29.Controllers
             }
 
             var payment = await _context.Payments
-                .Include(p => p.User)
+                .Include(p => p.UserService)
                 .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payment == null)
             {
@@ -48,7 +48,7 @@ namespace WebApplication29.Controllers
         // GET: Payments/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["UserServiceId"] = new SelectList(_context.UserServices, "UserServiceId", "UserServiceId");
             return View();
         }
 
@@ -57,15 +57,16 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,UserId,PaymentDate")] Payment payment)
+        public async Task<IActionResult> Create([Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,PaymentDate")] Payment payment,int UserServiceId)
         {
-            if (payment.UserId != null || ModelState.IsValid)
+            if (UserServiceId!=null||ModelState.IsValid)
             {
+               payment.UserServiceId=UserServiceId;
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", payment.UserId);
+            ViewData["UserServiceId"] = new SelectList(_context.UserServices, "UserServiceId", "UserServiceId", payment.UserServiceId);
             return View(payment);
         }
 
@@ -82,7 +83,7 @@ namespace WebApplication29.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", payment.UserId);
+            ViewData["UserServiceId"] = new SelectList(_context.UserServices, "UserServiceId", "UserServiceId", payment.UserServiceId);
             return View(payment);
         }
 
@@ -91,14 +92,14 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,UserId,PaymentDate")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PaymentType,PaymentAmount,CardNumber,PaymentDate,UserServiceId")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
                 return NotFound();
             }
 
-            if (payment.UserId != null || ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -118,7 +119,7 @@ namespace WebApplication29.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", payment.UserId);
+            ViewData["UserServiceId"] = new SelectList(_context.UserServices, "UserServiceId", "UserServiceId", payment.UserServiceId);
             return View(payment);
         }
 
@@ -131,7 +132,7 @@ namespace WebApplication29.Controllers
             }
 
             var payment = await _context.Payments
-                .Include(p => p.User)
+                .Include(p => p.UserService)
                 .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payment == null)
             {

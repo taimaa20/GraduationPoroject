@@ -4,7 +4,7 @@
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
  
-       string[] TableHeaders = new string[]{"PaymentId","PaymentType" ,"PaymentAmount","CardNumber","paymentDate","FirstName","LastName","PhoneNumber"
+       string[] TableHeaders = new string[]{"PaymentId","PaymentType" ,"PaymentAmount","CardNumber","paymentDate","FirstName","LastName","PhoneNumber","status","Date","Service Name","Price"
      };
 
 }
@@ -87,6 +87,11 @@
                             <td>@data.users.FirstName </td>
                       <td>@data.users.LastName </td>
                        <td>@data.users.PhoneNumber </td>
+                           <td>@data.userService.Status </td>
+                               <td>@data.userService.Date </td>
+                                <td>@data.services.ServiceName </td>
+                    <td>@data.services.Price </td>
+                                  
                     </tr>
 
 

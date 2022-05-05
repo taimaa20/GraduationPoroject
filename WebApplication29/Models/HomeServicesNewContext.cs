@@ -165,10 +165,10 @@ namespace WebApplication29.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.User)
+                entity.HasOne(d => d.UserService)
                     .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_Payment_User");
+                    .HasForeignKey(d => d.UserServiceId)
+                    .HasConstraintName("FK_Payment_UserService");
             });
 
             modelBuilder.Entity<Review>(entity =>
@@ -217,6 +217,8 @@ namespace WebApplication29.Models
                 entity.Property(e => e.ServiceName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.UserImage).IsUnicode(false);
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Services)

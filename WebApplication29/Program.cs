@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using WebApplication29.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,15 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 {
     options.IdleTimeout = TimeSpan.FromMinutes(1000);
 });
+builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+{
+    ProgressBar = true,
+    PositionClass = ToastPositions.TopRight,
+    PreventDuplicates = true,
+    CloseButton = true
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

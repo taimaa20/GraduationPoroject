@@ -12,13 +12,16 @@ namespace WebApplication29.Controllers
 {
     public class ServicesController : Controller
     {
+    
         private readonly HomeServicesNewContext _context;
+        private IWebHostEnvironment _hostEnvironment;
 
-        public ServicesController(HomeServicesNewContext context)
+
+        public ServicesController(HomeServicesNewContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
-
         // GET: Services
         public async Task<IActionResult> Index()
         {
@@ -59,19 +62,31 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,ServiceName,Price,CategoryId,UserId,Description")] Service service)
+        public async Task<IActionResult> Create([Bind("ServiceId,ServiceName,Price,CategoryId,UserId,Description,ImageFile")] Service service)
         {
-            if ((service.CategoryId!=null&&service.UserId!=null)|| ModelState.IsValid)
+            if ((service.CategoryId != null && service.UserId != null) || ModelState.IsValid)
             {
-                _context.Add(service);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (service.ImageFile != null)
+                {
+                    string wRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Guid.NewGuid().ToString() + "_" + service.ImageFile.FileName;
+                    string path = Path.Combine(wRootPath + "/Image/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+
+                        await service.ImageFile.CopyToAsync(fileStream);
+                    }
+                    service.UserImage = fileName;
+                    _context.Add(service);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", service.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", service.UserId);
-            return View(service);
+                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", service.UserId);
+                return View(service);
+            
         }
-
         // GET: Services/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -95,7 +110,7 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,ServiceName,Price,CategoryId,UserId,Description")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,ServiceName,Price,CategoryId,UserId,Description,ImageFile")] Service service)
         {
             if (id != service.ServiceId)
             {
@@ -106,8 +121,22 @@ namespace WebApplication29.Controllers
             {
                 try
                 {
-                    _context.Update(service);
-                    await _context.SaveChangesAsync();
+                    if (service.ImageFile != null)
+                    {
+                        string wRootPath = _hostEnvironment.WebRootPath;
+                        string fileName = Guid.NewGuid().ToString() + "_" + service.ImageFile.FileName;
+                        string path = Path.Combine(wRootPath + "/Image/", fileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+
+                            await service.ImageFile.CopyToAsync(fileStream);
+                        }
+                        service.UserImage = fileName;
+
+                        _context.Update(service);
+                        await _context.SaveChangesAsync();
+                    }
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {

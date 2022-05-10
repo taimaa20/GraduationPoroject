@@ -1,0 +1,105 @@
+﻿@model IEnumerable<WebApplication29.Models.joins>
+
+@{
+    var UserServiceId = ViewBag.UserServiceId;
+    var payam = ViewBag.PaymentAmount;
+     
+       Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link href="~/RegistrationFile/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/RegistrationFile/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="~/RegistrationFile/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/RegistrationFile/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/RegistrationFile/css/main.css" rel="stylesheet" media="all">
+</head>
+
+
+    <div class="page-wrapper  p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title" style=" text-align: center;">Payment Information</h2>
+                           <form asp-action="AddPayment">
+                         
+   
+                        
+                        <div class="input-group">
+                                    <label class="label" style="text-align: left;">Payment Type</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Visa
+                                            <input type="radio" value="Visa" type="radio" checked="checked" name="PaymenType" id="PaymenType">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">PayPal
+                                            <input type="radio" name="PaymenType" id="PaymenType" value="female"> 
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Credit Card
+                                            <input type="radio" name="PaymenType" id="PaymenType" value="Credit Card"> 
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                   
+                     <input type="hidden" name="UserServiceId" id="UserServiceId" value="@UserServiceId"> 
+
+                  
+                              <div class="form-group"> <label for="cardNumber">
+                                        <h6 class="label" style="text-align: left;">Card number</h6>
+                                    </label>
+                                    <div class="input-group"> <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                                       
+                                </div>
+                                <div style="margin-bottom:10px;" >
+                                   <h6 class="label" style="text-align: left; font-size:20px;"> Amount: @payam  </h6>
+                                   </div>
+                          <div class="card-footer" style="display: flex;  justify-content: center;  align-items: center;"> <button type="submit" class="subscribe btn btn-primary  shadow-sm"> Confirm Payment </button>
+                         
+
+                        </div>
+                    </div> 
+               
+   
+                                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="~/RegistrationFile/vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="~/RegistrationFile/vendor/select2/select2.min.js"></script>
+    <script src="~/RegistrationFile/vendor/datepicker/moment.min.js"></script>
+    <script src="~/RegistrationFile/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/RegistrationFile/js/global.js"></script>
+               
+                        
+    <style>
+    body{background: #f5f5f5}.rounded{border-radius: 1rem}.nav-pills .nav-link{color: #555}.nav-pills .nav-link.active{color: white}input[type="radio"]{margin-right: 5px}.bold{font-weight:bold}
+ 
+		button {color: #ffffff;text-decoration: none;font-size: 13px;background: #055999;padding: 7px 20px;margin-top: 10px;display: inline-block;}
+	</style>

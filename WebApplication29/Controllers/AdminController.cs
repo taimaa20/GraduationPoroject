@@ -7,17 +7,23 @@ namespace WebApplication29.Controllers
 
     public class AdminController : Controller
     {
+     
         private readonly HomeServicesNewContext _context;
-
-        public AdminController(HomeServicesNewContext context)
+        private IWebHostEnvironment _hostEnvironment;
+        public AdminController(HomeServicesNewContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
+
         }
+      
         HomeServicesNewContext db = new HomeServicesNewContext();
         public IActionResult AllUsers(string name)
         {
             //FetchData();
 
+
+           
 
             List<User> user = db.Users.ToList();
             var getuser = from m in _context.Users
@@ -126,7 +132,7 @@ namespace WebApplication29.Controllers
                                  from rol in table2.ToList()
 
                                  select new joins { roles = rol, users = us, logins = log };
-            var mal = employeeRecord.Where(x => x.roles.RoleId == 2 || x.roles.RoleId == 4);
+            var mal = employeeRecord.Where(x => x.roles.RoleId == 3);
             if (!String.IsNullOrEmpty(EmName))
             {
                 mal = mal.Where(x => x.users.FirstName!.Contains(EmName) || x.users.LastName!.Contains(EmName));
@@ -160,7 +166,7 @@ namespace WebApplication29.Controllers
 
                                        select new joins { salaries = sal, roles = rol, users = us, logins = log };
 
-            var multable1 = employeeSalaryRecord.Where(x => x.roles.RoleId == 2 || x.roles.RoleId == 4);
+            var multable1 = employeeSalaryRecord.Where(x => x.roles.RoleId == 3 );
             return View(employeeSalaryRecord.ToList());
 
         }
@@ -366,16 +372,23 @@ namespace WebApplication29.Controllers
 
 
             List<Payment> payment = db.Payments.ToList();
+            List<Service> services = db.Services.ToList();
 
+            List<UserService> userServices = db.UserServices.ToList();
             List<User> user = db.Users.ToList();
 
             var AllServices = from pay in payment
-                              join us in user on pay.UserId equals us.UserId into table1
-                              from us in table1.ToList()
+                              join usrser in userServices on pay.UserServiceId equals usrser.UserServiceId into table1
+                              from usrser in table1.ToList()
+                              join usr in user on usrser.UserId equals usr.UserId into table2
+                              from usr in table2.ToList()
+                              join ser in services on usrser.ServiceId equals ser.ServiceId into table3
+                              from ser in table3.ToList()
 
 
 
-                              select new joins { users = us, payment = pay };
+
+                              select new joins { users = usr, payment = pay, userService = usrser,services=ser };
 
             if (!String.IsNullOrEmpty(UName))
             {
@@ -393,20 +406,23 @@ namespace WebApplication29.Controllers
             List<Payment> payment = db.Payments.ToList();
 
             List<User> user = db.Users.ToList();
+            List<UserService> userServices = db.UserServices.ToList();
 
             var AllServices = from pay in payment
-                              join us in user on pay.UserId equals us.UserId into table1
-                              from us in table1.ToList()
+                              join usrser in userServices on pay.UserServiceId equals usrser.UserServiceId into table1
+                              from usrser in table1.ToList()
+                              join usr in user on usrser.UserId equals usr.UserId into table2
+                              from usr in table2.ToList()
 
 
 
-                              select new joins { users = us, payment = pay };
+                              select new joins {  payment = pay, userService = usrser, users = usr };
             var multable1 = AllServices.Where(x => x.payment.PaymentDate >= startDate && x.payment.PaymentDate <= endDate);
 
 
             return View(multable1);
         }
-
+       
 
 
         public IActionResult Adds()
@@ -420,12 +436,14 @@ namespace WebApplication29.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Adds([Bind("LoginId,UserName,Password,ConfimPassword,RoleId")] Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage)
+        public async Task<IActionResult> Adds([Bind("LoginId,UserName,Password,ConfimPassword,RoleId")] Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage, IFormFile ImageFile)
         {
             if (login.RoleId != null || ModelState.IsValid)
             {
-                
                 User user = new User();
+
+                login.RoleId = 4;
+
                 _context.Add(login);
 
                 var LastId = _context.Logins.OrderByDescending(x => x.LoginId).FirstOrDefault().LoginId;
@@ -438,14 +456,27 @@ namespace WebApplication29.Controllers
                 user.Adress = Adress;
                 user.City = City;
                 user.BirthDate = BirthDate;
-                user.UserImage = UserImage;
+                user.ImageFile = ImageFile;
                 user.LoginId = LastId;
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (user.ImageFile != null)
+                {
+                    string wRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
+                    string path = Path.Combine(wRootPath + "/Image/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+
+                        await user.ImageFile.CopyToAsync(fileStream);
+                    }
+                    user.UserImage = fileName;
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId", login.RoleId);
-            return View(login);
+                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId", login.RoleId);
+                return View(login);
+            
         }
         public IActionResult ContactUsTable()
 
@@ -463,11 +494,11 @@ namespace WebApplication29.Controllers
         {
 
 
-            ViewBag.countOFEmployees = _context.Logins.Where(x => x.RoleId == 2).Count();
+            ViewBag.countOFEmployees = _context.Logins.Where(x => x.RoleId == 3).Count();
             ViewBag.countOFAllUsers = _context.Users.Count();
             ViewBag.countOFServices = _context.Services.Count();
 
-            ViewBag.countOFCustomer = _context.Logins.Where(x => x.RoleId == 3).Count();
+            ViewBag.countOFCustomer = _context.Logins.Where(x => x.RoleId == 5).Count();
             Users();
             return View();
         }

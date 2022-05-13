@@ -1,4 +1,4 @@
-.toast {
+/*.toast {
   max-width: $toast-max-width;
   overflow: hidden; // cheap rounded corners on nested items
   @include font-size($toast-font-size);
@@ -10,7 +10,7 @@
   backdrop-filter: blur(10px);
   opacity: 0;
   @include border-radius($toast-border-radius);
-
+    */
   &:not(:last-child) {
     margin-bottom: $toast-padding-x;
   }

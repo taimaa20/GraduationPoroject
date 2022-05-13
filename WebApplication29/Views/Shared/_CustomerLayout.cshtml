@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Employee Dashboard</title>
+    <title>Customer Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="~/Dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,11 +35,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index" asp-controller="Employee">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"  asp-action="Index">
                 <div class="sidebar-brand-icon ">
                     <i class="fas fa-chalkboard-teacher"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Employee Dashboard </div>
+                <div class="sidebar-brand-text mx-3">Customer Dashboard </div>
             </a>
 
             <!-- Divider -->
@@ -47,7 +47,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" asp-action="Index" asp-controller="Employee">
+                <a class="nav-link" asp-action="Index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span  >Dashboard</span></a>
             </li>
@@ -58,24 +58,7 @@
             <!-- Heading -->
            
             <!-- Nav Item - Pages Collapse Menu -->
-               <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-user-friends"></i>
-                    <span>Employee Services </span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Services report</h6>
-                        <a class="collapse-item"  asp-action="UserServicesName" asp-controller="Employee" >Services Users Name </a>
-                        <a class="collapse-item"   asp-action="EmployeeServices" asp-controller="Employee">Daily Services</a>
-                           <a class="collapse-item"  asp-action="MounthelyEmployeeServices" asp-controller="Employee" > Mounthely Services</a>
-                        
-                    </div>
-                </div>
-            </li>
-
+     
             <!-- Divider -->
          
             <!-- Heading -->
@@ -84,17 +67,18 @@
           
              
             <!-- Sidebar Toggler (Sidebar) -->
-                                <li class="nav-item">
-                <a class="nav-link" asp-action="EmployeeMessage" asp-controller="Employee" >
-                    <i class="fas fa-user-friends"></i>
-                    <span>Messages</span></a>
-            </li>   
+                              
                           <li class="nav-item">
-                <a class="nav-link" asp-action="SalarySlip" asp-controller="Employee" >
+                <a class="nav-link" asp-action="ServicesWithPayment" asp-controller="Costumer">
                     <i class="fas fa-user-friends"></i>
-                    <span>Salary Slip</span></a>
+                    <span>Services With Payment</span></a>
             </li>  
             
+                   <li class="nav-item">
+                <a class="nav-link" asp-action="AddReview" asp-controller="Costumer">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Done Services</span></a>
+            </li>  
 
         </ul>
         <!-- End of Sidebar -->
@@ -121,12 +105,12 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                            <li class="nav-item dropdown no-arrow mx-1" >
-                            <a class="nav-link dropdown-item"  asp-action="EmployeeMessage" asp-controller="Employee"
-                                >
-                                <i class="fas fa-envelope fa-fw" asp-action="EmployeeMessage" asp-controller="Employee"></i>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle"  
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter" >@countOFMessages</span>
+                                <span class="badge badge-danger badge-counter">@countOFMessages</span>
                             </a>
                             <!-- Dropdown - Messages -->
                            
@@ -149,10 +133,14 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                
+                  
                                      <a class="dropdown-item" asp-action="ChangePassword">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile  Setting
+                                    Profile Setting
+                                </a>
+                                     <a class="dropdown-item" asp-action="HomeIndex" asp-controller="Home">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    go to home
                                 </a>
                                 
                                 <div class="dropdown-divider"></div>
@@ -235,5 +223,5 @@
 </body>
 
 </html>
-    @await RenderSectionAsync("Scripts", required: false)
+   @await RenderSectionAsync("Scripts", required: false)
      @await Component.InvokeAsync("NToastNotify")

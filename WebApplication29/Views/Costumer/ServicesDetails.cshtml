@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WebApplication29.Models.joins>
+
+@{
+           Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+
+		   var UserServicesId= ViewBag.UserServiceId;
+
+}
+	<section id="content">
+		<div class="container content">	
+<div class="row">
+			<div class="col-md-12">
+				<div><h2>Our Quality Service</h2>We are happy to know your review and expenriance with us .</div>
+				<br>
+			</div>
+		</div>		
+        <!-- Service Blcoks -->
+
+     <section id="content">
+	
+	<div id="placeholderhere">
+	<div class="container">
+			<div class="row">
+				 <div class="skill-home" style="width: 285px; background-color: #ffc02adb;border-radius: 10px;"> <div class="skill-home-solid clearfix" style="display: flex; flex-wrap: wrap; flex-direction: row; align-content: flex-start;">
+	
+							  @{
+                
+                 @if (Model != null)
+            {
+			                @foreach (var user in Model)
+    {
+		
+	
+			<div class="col-md-3 "  >
+				 		<div class="box" style="margin-top:50px;" > 
+	<img src="~/Image/@user.services.UserImage" asp-append-version="true"style="width:260px;height:152.125px" style="border-radius:50%;" />
+		<div class="box-area"  style="color: black; margin-top: 10px;width: 260px;margin-bottom: 20px;">
+		<h4>@user.services.ServiceName</h4> 
+			<p>@user.services.Description</p> 
+		<h4>price:@user.services.Price jd</h4>
+			<h4>status:@user.userService.Status </h4>
+				<h6>date:@user.userService.Date </h6>
+		
+						
+</div></div>
+		</div>		 	
+    }}}</div>
+		</div></div>
+		
+		</div></div></section>
+		</div>
+	 
+
+	<div style="margin-left: 30px;margin-top: 30px;">
+		<form asp-action="CreateReview">
+
+	<h3>Your Review</h3>
+  <div class="rate">
+    <input type="radio" id="star5" name="ReviewRange" value="5" />
+    <label for="star5" title="text">5 stars</label>
+    <input type="radio" id="star4" name="ReviewRange" value="4" />
+    <label for="star4" title="text">4 stars</label>
+    <input type="radio" id="star3" name="ReviewRange" value="3" />
+    <label for="star3" title="text">3 stars</label>
+    <input type="radio" id="star2" name="ReviewRange" value="2" />
+    <label for="star2" title="text">2 stars</label>
+    <input type="radio" id="star1" name="ReviewRange" value="1" />
+    <label for="star1" title="text">1 star</label>
+  </div>
+
+<input type="hidden" name="UserServiceId" id="UserServiceId" class="form-control" value="@UserServicesId"  readonly="readonly" placeholder="UserServiceId" required>
+
+					<input  name="ReviewText" id="ReviewText" class="form-control" placeholder="ReviewText"  type="text"  required>
+					    	<button type="submit" class="btn btn-primary " style="border-radius:15px; border:5px;margin-top: 20px;">Submit</button>
+                    
+				
+								</form></div>
+	<style>
+	*{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */</style>

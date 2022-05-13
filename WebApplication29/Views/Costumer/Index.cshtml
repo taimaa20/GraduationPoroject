@@ -1,14 +1,13 @@
-﻿@model IEnumerable<WebApplication29.Models.Service>
-
+﻿@model IEnumerable<WebApplication29.Models.joins>
 @{
 
-       Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
-    var CountOfServicesToday= ViewBag.CountOfServicesToday ;
+       Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    var CountOfPayment=   ViewBag.CountOfPayment ;
 
-    var CountOfServices = ViewBag.CountOfServices;
-    var countOFCustomer = ViewBag.countOFCustomer;
-    var countOFAllUsers = ViewBag.countOFAllUsers;
-        string[] TableHeaders = new string[]{"","ServiceName","Price","Description"
+    var CountOfUserServices = ViewBag.CountOfUserServices;
+    var CountOfDoneServices = ViewBag.CountOfDoneServices;
+    var CountOfTodayServices = ViewBag.CountOfTodayServices;
+        string[] TableHeaders = new string[]{"","ServiceName","Price","Description","Date"
           
      };
 
@@ -27,8 +26,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                               Count Of Services from Today</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@CountOfServicesToday</div>
+                                               Count Of Payment</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@CountOfPayment</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-user-friends fa-2x text-gray-300"></i>
@@ -45,8 +44,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                               count of all the users</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@countOFAllUsers</div>
+                                              Count Of Today Services</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@CountOfTodayServices</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -62,11 +61,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">count of services
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">count of Usre services
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@CountOfServices</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@CountOfUserServices</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -92,8 +91,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                               count of customer</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@countOFCustomer</div>
+                                              Count Of Done Services</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@CountOfDoneServices</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa fa-street-view fa-2x text-gray-300"></i>
@@ -142,11 +141,11 @@
                      var index = Model.ToList().IndexOf(data)+1;
                                     <tr>
                                         <td>@index </td>
-                                     <td> <img src="~/Image/@data.UserImage" asp-append-version="true" width="150px" height="100" style="border-radius:50%;" /></td>
-
-                        <td>@data.ServiceName </td>
-                        <td>@data.Price </td>
-                        <td>@data.Description </td>
+                                      
+                        <td>@data.services.ServiceName </td>
+                        <td>@data.services.Price </td>
+                        <td>@data.services.Description </td>
+                        <td>@data.userService.Date </td>
                        
 
                        
@@ -165,5 +164,4 @@
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
-           
+     

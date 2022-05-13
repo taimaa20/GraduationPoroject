@@ -22,6 +22,7 @@ namespace WebApplication29.Controllers
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
+        HomeServicesNewContext db = new HomeServicesNewContext();
         // GET: Services
         public async Task<IActionResult> Index()
         {
@@ -52,8 +53,31 @@ namespace WebApplication29.Controllers
         // GET: Services/Create
         public IActionResult Create()
         {
+
+
+            List<User> users = db.Users.ToList();
+
+
+            List<Login> logins = db.Logins.ToList();
+            List<Role> roles = db.Roles.ToList();
+
+
+            var employeeSalaryRecord = from us in users
+                                       join log in logins on us.LoginId equals log.LoginId into table1
+                                       from log in table1.ToList()
+                                       join rol in roles on log.RoleId equals rol.RoleId into table2
+                                       from rol in table2.ToList()
+
+
+                                       select new joins { roles = rol, users = us, logins = log };
+
+            var multable1 = employeeSalaryRecord.Where(x => x.roles.RoleId == 3).ToList();
+
+           
+
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["UserId"] = new SelectList(multable1, "UserId", "FirstName");
             return View();
         }
 
@@ -64,6 +88,27 @@ namespace WebApplication29.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ServiceId,ServiceName,Price,CategoryId,UserId,Description,ImageFile")] Service service)
         {
+
+
+            List<User> users = db.Users.ToList();
+
+
+            List<Login> logins = db.Logins.ToList();
+            List<Role> roles = db.Roles.ToList();
+
+
+            var employeeSalaryRecord = from us in users
+                                       join log in logins on us.LoginId equals log.LoginId into table1
+                                       from log in table1.ToList()
+                                       join rol in roles on log.RoleId equals rol.RoleId into table2
+                                       from rol in table2.ToList()
+
+
+                                       select new joins { roles = rol, users = us, logins = log };
+
+            var multable1 = employeeSalaryRecord.Where(x => x.roles.RoleId == 3).ToList().Select(x=>x.users.FirstName);
+
+
             if ((service.CategoryId != null && service.UserId != null) || ModelState.IsValid)
             {
                 if (service.ImageFile != null)
@@ -82,9 +127,10 @@ namespace WebApplication29.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
+            
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", service.CategoryId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", service.UserId);
-                return View(service);
+            ViewBag.userid = multable1;
+            return View(service);
             
         }
         // GET: Services/Edit/5

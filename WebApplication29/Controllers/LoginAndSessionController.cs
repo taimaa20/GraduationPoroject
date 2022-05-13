@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
+using System.Linq;
 using WebApplication29.Models;
 
 namespace WebApplication29.Controllers
@@ -73,7 +74,7 @@ namespace WebApplication29.Controllers
                         {
 
                             HttpContext.Session.SetInt32("id", id.users.UserId);
-                            return RedirectToAction("Index", "HomeIndex");
+                            return RedirectToAction("HomeIndex", "Home");
                         }
 
                 }
@@ -86,39 +87,43 @@ namespace WebApplication29.Controllers
             return View();
         }
         
-        public IActionResult Regstration()
+      public IActionResult Regstration()
         {
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+           
             return View();
         }
 
         // POST: Logins/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Regstration([Bind("LoginId,UserName,Password,ConfimPassword,RoleId")] Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage, IFormFile ImageFile)
+
+        public IActionResult Regstration1(string UserName ,string Password,string ConfirmPassword, Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage, IFormFile ImageFile , User user)
         {
-            if (login.RoleId != null || ModelState.IsValid)
+
+
+            List<Login> loginss = db.Logins.ToList();
+          var name = loginss.Where(x => x.UserName == UserName).ToList();
+            if (name == null)
             {
-                User user = new User();
-              
-                    login.RoleId = 5;
+                login.RoleId = 5;
+                login.UserName = UserName;
+                login.Password = Password;
+                login.ConfimPassword = ConfirmPassword;
+                _context.Add(login);
+                _context.SaveChangesAsync();
+                List<Login> logins = db.Logins.ToList();
+                var LastId = logins.Where(x => x.UserName == UserName).Select(x => x.LoginId).FirstOrDefault();
+                user.FirstName = FirstName;
+                user.LastName = LastName;
 
-                    _context.Add(login);
-
-                    var LastId = _context.Logins.OrderByDescending(x => x.LoginId).FirstOrDefault().LoginId;
-                    user.FirstName = FirstName;
-                    user.LastName = LastName;
-
-                    user.Gender = Gender;
-                    user.PhoneNumber = PhoneNumber;
-                    user.Email = Email;
-                    user.Adress = Adress;
-                    user.City = City;
-                    user.BirthDate = BirthDate;
-                  user.ImageFile = ImageFile;
-                    user.LoginId = LastId;
+                user.Gender = Gender;
+                user.PhoneNumber = PhoneNumber;
+                user.Email = Email;
+                user.Adress = Adress;
+                user.City = City;
+                user.BirthDate = BirthDate;
+                user.ImageFile = ImageFile;
+                user.LoginId = LastId;
                 if (user.ImageFile != null)
                 {
                     string wRootPath = _hostEnvironment.WebRootPath;
@@ -127,17 +132,21 @@ namespace WebApplication29.Controllers
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
 
-                        await user.ImageFile.CopyToAsync(fileStream);
+                        user.ImageFile.CopyToAsync(fileStream);
                     }
                     user.UserImage = fileName;
                     _context.Add(user);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    _context.SaveChangesAsync();
+                    return RedirectToAction("login");
                 }
             }
-                ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId", login.RoleId);
-                return View(login);
-           
+            else
+            {
+                _toastNotification.AddErrorToastMessage("The username already taken");
+                return RedirectToAction("Regstration");
+            }
+
+            return RedirectToAction("login");
         }
         public IActionResult Logout()
         {

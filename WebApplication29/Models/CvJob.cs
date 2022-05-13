@@ -6,7 +6,7 @@ namespace WebApplication29.Models
     public partial class CvJob
     {
         public int CvId { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public int? YearsOfExperiance { get; set; }
         public string? LastWorkPlace { get; set; }
         public string? JobDescription { get; set; }

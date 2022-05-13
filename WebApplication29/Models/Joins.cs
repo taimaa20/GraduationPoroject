@@ -16,6 +16,7 @@ namespace WebApplication29.Models
         public Payment ? payment { get; set; }
 
         public Category? categories { get; set; }
+        public CvJob ? cvJob { get; set; }
 
     }
 }

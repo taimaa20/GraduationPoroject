@@ -23,6 +23,10 @@ namespace WebApplication29.Controllers
         HomeServicesNewContext db = new HomeServicesNewContext();
         public IActionResult Index()
         {
+            string id = "id";
+
+            int? employeeid = HttpContext.Session.GetInt32(id);
+            ViewBag.id = HttpContext.Session.GetInt32(id);
             return View();
         }
         public IActionResult HomeIndex()
@@ -33,10 +37,7 @@ namespace WebApplication29.Controllers
         {
             return View();
         }
-        public IActionResult ContactUs()
-        {
-            return View();
-        }
+     
         public IActionResult Porifilo()
         {
             return View();
@@ -181,6 +182,26 @@ namespace WebApplication29.Controllers
                 return RedirectToAction("Services");
                
             }
+        }
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        // POST: ContactUs/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ContactUs([Bind("ContactId,FullName,Email,MessageText")] ContactU contactU)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(contactU);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(contactU);
         }
 
     }

@@ -6,7 +6,7 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"ServiceID" ,"UserServiceId","ServiceName"
+       string[] TableHeaders = new string[]{" ","ServiceName"
           ,"Price","Description","Date"," UserId","User Name","Adress","city","Phone Number ","Status"
      };
 
@@ -45,7 +45,7 @@
                       <input input type="date" name="startDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         
                           <input type="submit" value="search"  class="btn btn-primary " />   
-                           <a asp-action="EmployeeServices">get all</a>
+                           <a style="margin-left: 10px;" asp-action="EmployeeServices">get today</a>
                         </div> 
 
                
@@ -79,11 +79,12 @@
                 foreach (var data in Model)
              
                 {
-
+  var index = Model.ToList().IndexOf(data)+1;
                     <tr>
                        
-                        <td>@data.services.ServiceId </td>
-                       <td>@data.userService.UserServiceId </td>
+              
+                             
+                                        <td>@index </td>
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
                         <td>@data.services.Description</td>

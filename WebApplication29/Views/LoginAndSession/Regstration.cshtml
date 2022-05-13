@@ -1,4 +1,4 @@
-﻿@model WebApplication29.Models.Login
+﻿
 @{
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
@@ -30,34 +30,40 @@
 </head>
 
 
-    <div class="page-wrapper  p-t-130 p-b-100 font-poppins">
+    <div class="page-wrapper  p-t-130 p-b-100 font-poppins" >
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
-                <div class="card-body">
+                <div class="card-body" style="background-color: #dce2e0;border-radius: 10px;">
                     <h2 class="title" style=" text-align: center;">Sign up</h2>
-                    <form  asp-action="Regstration" enctype="multipart/form-data" onsubmit ="verifyPassword()">
+                    <form  asp-action="Regstration1" enctype="multipart/form-data" onsubmit ="verifyPassword()" >
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">UserName</label>
-                                    <input class="input--style-4" type="text" asp-for="UserName" required>
-                                      <span asp-validation-for="UserName" class="text-danger"></span>
+                                   
+                                      <label class="UserName" for="UserName">UserName</label>
+                                    <input name="UserName"class="input--style-4" id="UserName"  pattern="^[a-zA-Z][a-zA-Z0-9-_.]{5,12}$" title="alphanumeric 6 to 12 chars" placeholder="UserName" required>
+                              
+                                    
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                   <label class="label">Password</label>
-                                    <input class="input--style-4" type="password" id="Password" asp-for="Password" required>
-                                 <span asp-validation-for="Password" class="text-danger"></span>
+                                    
+                                    <input name="Password"class="input--style-4" id="Password"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="at least one number and one uppercase and lowercase letter, and at least 6 or more characters" placeholder="Password" required>
+                              
+                                   
                              </div>
                             </div>
                         </div>
+
                            <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Confim your Password</label>
-                                    <input class="input--style-4" type="password"id="Password2" asp-for="ConfimPassword" required >
-                                 <span asp-validation-for="ConfimPassword" class="text-danger"></span>
+                 
+                                    <input name="ConfirmPassword" class="input--style-4" id="ConfirmPassword"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="at least one number and one uppercase and lowercase letter, and at least 6 or more characters" placeholder="ConfirmPassword" required>
+
                              </div>
                             </div>
                           <div class="col-2">
@@ -66,20 +72,20 @@
                                     <input class="input--style-4" type="text" asp-for="RoleId" >
                                 </div>-->
                             </div>
-<hr style="width:100%;margin: 30px,0px,30px,0px;" ,="" size="40" color="black">                            
+                            <hr style="width:100%;margin: 30px,0px,30px,0px;" ,="" size="40" color="black">                            
                         </div>
                               <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                      <label class="label" for="FirstName">FirstName</label>
-                                    <input name="FirstName" id="FirstName" type="text" class="input--style-4" placeholder="FirstName" required>
+                                    <input name="FirstName" id="FirstName"  pattern="^[a-zA-Z]{3,15}$" title="Name may only contain letters " type="text" class="input--style-4" placeholder="FirstName" required>
                                 </div>
                             </div>
                            
                             <div class="col-2">
                                 <div class="input-group">
                                         <label class="label" for="LastName">LastName</label>
-                                    <input name="LastName" id="LastName" type="text" class="input--style-4" placeholder="LastName" required>
+                                    <input name="LastName" id="LastName" type="text" pattern="^[a-zA-Z]{3,15}$" title="Name may only contain letters " class="input--style-4" placeholder="LastName" required>
                                 </div>
                             </div>
                         </div>
@@ -87,13 +93,13 @@
                             <div class="col-2">
                                 <div class="input-group">
                              <label class="label" for="City">City</label>
-                                    <input name="City" id="City" type="text" class="input--style-4" placeholder="City" required>
+                                    <input name="City" id="City" type="text"pattern="^[a-zA-Z]{3,15}$" title="City may only contain letters " class="input--style-4" placeholder="City" required>
                                                               </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label" for="Adress">Adress</label>
-                                    <input name="Adress" id="Adress" type="text" class="input--style-4" placeholder="Adress" required>
+                                    <input name="Adress" id="Adress" type="text" class="input--style-4" pattern="^[a-zA-Z]{3,15}$" title="Address may only contain letters " placeholder="Adress" required>
                                 </div>
                             </div>
                         </div>
@@ -127,20 +133,20 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email</label>
-                                    <input class="input--style-4" id="Email" type="email" name="email" placeholder="Email" required>
+                                    <input class="input--style-4" id="Email" type="email"   name="email" placeholder="Email" required>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Phone Number</label>
-                                    <input class="input--style-4" id="PhoneNumber" type="text" name="PhoneNumber" placeholder="PhoneNumber" required>
+                                    <input class="input--style-4" id="PhoneNumber"  pattern="[7]{1}[0-9]{9}" title="Phone number start with 7 and remaing 9 digit with 0-9" type="text" name="PhoneNumber" placeholder="PhoneNumber" required>
                                 </div>
                             </div>
                         </div>
                         <div class="input-group">
                              <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">ImageFile</label>
+                                    <label class="label">your image</label>
                                     <input class="input--style-4" type="file"  name="ImageFile" accept="image/*"required />
                                 </div>
                             </div>
@@ -164,38 +170,3 @@
     <!-- Main JS-->
     <script src="~/RegistrationFile/js/global.js"></script>
 
-
-<!-- end document-->
-<script>  /*
-function verifyPassword() {  
-
-  //check empty password field  
- 
-  //check empty password field  
-  var pw1 = document.getElementById("Password");  
-  var pw2 = document.getElementById("Password2");  
-  if(pw1 != pw2)  
-  {   
-    alert("Passwords did not match");  
-    pw1.innerHTML="";
-  }
-  if(pw == "") {  
-     document.getElementById("message").innerHTML = "**Fill the password please!";  
-     return false;  
-  }  
-   
- //minimum password length validation  
-  if(pw.length < 8) {  
-     document.getElementById("message").innerHTML = "**Password length must be atleast 8 characters";  
-     return false;  
-  }  
-  
-//maximum length of password validation  
-  if(pw.length > 15) {  
-     document.getElementById("message").innerHTML = "**Password length must not exceed 15 characters";  
-     return false;  
-  } else {  
-     alert("Password is correct");  
-  }  
-}  */
-</script>  

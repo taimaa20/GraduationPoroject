@@ -1,13 +1,14 @@
-﻿@model IEnumerable<WebApplication29.Models.joins>
+﻿
+@model IEnumerable<WebApplication29.Models.joins>
 
 @{
 
-    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+ Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{" ","ServiceName"
-          ,"Price","Description","Date"," UserId","User Name","Adress","city","Phone Number ","Status"
+       string[] TableHeaders = new string[]{"Img","ServiceName"
+          ,"Price","Description","Date","Status"
      };
 
 }
@@ -38,18 +39,7 @@
 </script>
  
     
-   <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="UserServicesName">
-                <div class="input-group">
-                      <label>User Name</label>
-                            
-                      <input input type="text" name="UserName" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        
-                          <input type="submit" value="search"  class="btn btn-primary " />   
-                           <a asp-action="UserServicesName">get all</a>
-                        </div> 
 
-               
-                 </form>
                 
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -57,7 +47,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="admitcard" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                                             @{
@@ -79,24 +69,24 @@
                 foreach (var data in Model)
              
                 {
-                             var index = Model.ToList().IndexOf(data)+1;
+
                     <tr>
                        
-              
-                             
-                                        <td>@index </td>
+                    <td>  <img src="~/Image/@data.services.UserImage" asp-append-version="true" width="150px" height="100" style="border-radius:50%;" /></td>
+                     
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
                         <td>@data.services.Description</td>
                          <td>@data.userService.Date </td>
-                          <td>@data.userService.UserId </td>
-                           <td>@data.users.FirstName @data.users.LastName </td>
-                            <td>@data.users.Adress </td>
-                             <td>@data.users.City </td>
-                               <td>@data.users.PhoneNumber </td>
-                        <td>@data.userService.Status </td>
-                    
+                          <td>@data.userService.Status </td>
                           
+                    
+                          <td id="f">
+                            @using (Html.BeginForm("ServicesDetails", "Costumer", new { UserServiceId = @data.userService.UserServiceId }, FormMethod.Post))
+                            {
+                                <button class="btn btn-primary">Add Review </button>
+                            }
+                        </td>
 
                     </tr>
 

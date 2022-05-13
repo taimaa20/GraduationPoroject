@@ -2,17 +2,15 @@
 
 @{
 
-    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
-    var countOFEmployees= ViewBag.countOFEmployees ;
-
-    var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{" ","ServiceName"
-          ,"Price","Description","Date"," UserId","User Name","Adress","city","Phone Number ","Status"
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+ 
+       string[] TableHeaders = new string[]{"PaymentType" ,"PaymentAmount","CardNumber","paymentDate","status","Date","Service Name","Price"
      };
 
 }
-
-             <script src="~/jsfiles/FileSaver.js"></script> @*could be downloaded from https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js*@
+ 
+          
+                        <script src="~/jsfiles/FileSaver.js"></script> @*could be downloaded from https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js*@
 <script>
     function fnExcelReport(id, name) {
         var tab_text = '<html xmlns: x="urn:schemas-microsoft-com:office:excel">';
@@ -35,29 +33,27 @@
         window.saveAs(blob, fileName);
 
     }
-</script>
- 
-    
-   <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="UserServicesName">
+</script>        
+
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="ServicesWithPayment">
                 <div class="input-group">
-                      <label>User Name</label>
-                            
-                      <input input type="text" name="UserName" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        
-                          <input type="submit" value="search"  class="btn btn-primary " />   
-                           <a asp-action="UserServicesName">get all</a>
+                            <input type="date" class="form-control bg-light border-0 small" name="startdate"  placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                         <input type="submit" value="search"  class="btn btn-primary " />   
+                                                 <h6 style="padding-top: 10px;padding-left: 10px;font-size: 20px;">
+    <a asp-action="ServicesWithPayment">get all</a>
+</h6>
                         </div> 
 
-               
+              
                  </form>
                 
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Services Status </h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Payemnts Records </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="admitcard" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                                             @{
@@ -70,8 +66,8 @@
                 }
                                         </tr>
                                     </thead>
-        <tbody>
-
+                                    <tbody>
+                                       
             @{
                 
                  @if (Model != null)
@@ -79,24 +75,18 @@
                 foreach (var data in Model)
              
                 {
-                             var index = Model.ToList().IndexOf(data)+1;
+
                     <tr>
-                       
-              
-                             
-                                        <td>@index </td>
-                        <td>@data.services.ServiceName </td>
-                        <td>@data.services.Price </td>
-                        <td>@data.services.Description</td>
+                   
+                         <td>@data.payment.PaymentType </td>
+                         <td>@data.payment.PaymentAmount </td>
+                         <td>@data.payment.CardNumber </td>
+                         <td>@data.payment.PaymentDate </td>
+                         <td>@data.userService.Status </td>
                          <td>@data.userService.Date </td>
-                          <td>@data.userService.UserId </td>
-                           <td>@data.users.FirstName @data.users.LastName </td>
-                            <td>@data.users.Adress </td>
-                             <td>@data.users.City </td>
-                               <td>@data.users.PhoneNumber </td>
-                        <td>@data.userService.Status </td>
-                    
-                          
+                         <td>@data.services.ServiceName </td>
+                         <td>@data.services.Price </td>
+
 
                     </tr>
 
@@ -104,13 +94,12 @@
                 }
             }
             }
-        </tbody>
-                  </table>
-                        </div>
+                                    </tbody>
+                             </table>
+ 
+                            </div>
                         </div>
                     </div>
-
-          
             <button class="btn btn-primary" onclick="javascript:fnExcelReport('dataTable', 'data')">Export To Excel</button>
       <input style="margin-left:5px;" type="button" onclick="generate()" class="btn btn-primary"  value="Export To PDF" />
 

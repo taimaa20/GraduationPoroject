@@ -7,14 +7,12 @@ namespace WebApplication29.Models
     {
         public Category()
         {
-            CvJobs = new HashSet<CvJob>();
             Services = new HashSet<Service>();
         }
 
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = null!;
 
-        public virtual ICollection<CvJob> CvJobs { get; set; }
         public virtual ICollection<Service> Services { get; set; }
     }
 }

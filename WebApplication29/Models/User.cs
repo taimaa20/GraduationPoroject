@@ -9,7 +9,6 @@ namespace WebApplication29.Models
     {
         public User()
         {
-            CvJobs = new HashSet<CvJob>();
             Messages = new HashSet<Message>();
             Salaries = new HashSet<Salary>();
             Services = new HashSet<Service>();
@@ -30,9 +29,7 @@ namespace WebApplication29.Models
         [NotMapped] // database dont have a column
         [DisplayName("Upload File")] // to show in view
         public IFormFile? ImageFile { get; set; } // data type name IFormFile
-
         public virtual Login Login { get; set; } = null!;
-        public virtual ICollection<CvJob> CvJobs { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<Salary> Salaries { get; set; }
         public virtual ICollection<Service> Services { get; set; }

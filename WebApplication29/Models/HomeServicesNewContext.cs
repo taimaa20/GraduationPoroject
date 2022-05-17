@@ -19,7 +19,6 @@ namespace WebApplication29.Models
         public virtual DbSet<AboutU> AboutUs { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<ContactU> ContactUs { get; set; } = null!;
-        public virtual DbSet<CvJob> CvJobs { get; set; } = null!;
         public virtual DbSet<Login> Logins { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
@@ -78,31 +77,6 @@ namespace WebApplication29.Models
                 entity.Property(e => e.MessageText)
                     .HasMaxLength(255)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<CvJob>(entity =>
-            {
-                entity.HasKey(e => e.CvId);
-
-                entity.ToTable("CvJob");
-
-                entity.Property(e => e.JobDescription)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastWorkPlace)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.CvJobs)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK_CvJob_Category");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.CvJobs)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_CvJob_User");
             });
 
             modelBuilder.Entity<Login>(entity =>

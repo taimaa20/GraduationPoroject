@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using WebApplication29.Models;
 
 namespace WebApplication29.Controllers
@@ -13,13 +14,16 @@ namespace WebApplication29.Controllers
     public class CategoriesController : Controller
     {
         private readonly HomeServicesNewContext _context;
-
-        public CategoriesController(HomeServicesNewContext context)
+        private IWebHostEnvironment _hostEnvironment;
+        private readonly IToastNotification _toastNotification;
+        public CategoriesController(HomeServicesNewContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _context = context;
-        }
+            _hostEnvironment = hostEnvironment;
+            _toastNotification = toastNotification;
 
-        // GET: Categories
+        }
+        HomeServicesNewContext db = new HomeServicesNewContext();
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
@@ -60,6 +64,8 @@ namespace WebApplication29.Controllers
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Category added succsefully");
+          
                 return RedirectToAction("Create", "Categories");
             }
             return View(category);

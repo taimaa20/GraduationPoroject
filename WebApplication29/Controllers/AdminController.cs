@@ -542,11 +542,12 @@ namespace WebApplication29.Controllers
                             user.ImageFile.CopyToAsync(fileStream);
                         }
                         user.UserImage = fileName;
-                        _context.Add(user);
-                        _context.SaveChangesAsync();
-                        _toastNotification.AddSuccessToastMessage("Employee add sucssfully");
-                        return RedirectToAction("Adds", "Admin");
+                      
                     }
+                    _context.Add(user);
+                    _context.SaveChangesAsync();
+                    _toastNotification.AddSuccessToastMessage("Employee add sucssfully");
+                    return RedirectToAction("Adds", "Admin");
                 }
                 else
                 {

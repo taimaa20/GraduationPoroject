@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var countOFEmployees= ViewBag.countOFEmployees ;
 
-    var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","ServiceID" ,"ServiceName"
-          ,"Price"," CategoryId"," UserId","Description","Date","Status","UserServiceId"
-     };
+    var countOFUsers = ViewBag.countOFUsers;
+    string[] TableHeaders = new string[]{"","UserImage","FirstName","LastName" ,"ServiceName"
+          ,"Price"," CategoryId","Description","Date","Status"
 
+};
 }<script src="~/jsfiles/FileSaver.js"></script> @*could be downloaded from https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js*@
 <script>
     function fnExcelReport(id, name) {
@@ -39,7 +39,7 @@
 
    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="AllUserServices">
                 <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" name="ServName"  placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" name="ServName"  placeholder="Search for service..." aria-label="Search" aria-describedby="basic-addon2">
                          <input type="submit" value="search"  class="btn btn-primary " />   
                                                  <h6 style="padding-top: 10px;padding-left: 10px;font-size: 20px;">
     <a asp-action="AllUserServices">get all</a>
@@ -78,20 +78,22 @@
              
                 {
 
-                    <tr>
+          var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
                                        <td> 	<img src="~/Image/@data.users.UserImage" asp-append-version="true"style="width:60px;height:60px" style="border-radius:10%;" />
 </td> 
                         <td>@data.users.FirstName </td>
                         <td>@data.users.LastName</td>
-                        <td>@data.services.ServiceId </td>
+                
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
                         <td>@data.services.CategoryId </td>
-                        <td>@data.services.UserId </td>
+                 
                         <td>@data.services.Description</td>
                          <td>@data.userService.Date </td>
                         <td>@data.userService.Status </td>
-                        <td>@data.userService.UserServiceId </td>
+                    
 
                     </tr>
 

@@ -4,8 +4,8 @@
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
    
-       string[] TableHeaders = new string[]{"UserID","UserImage" ,"Fname"
-          ,"Lname"," Gender"," Email","PhoneNumber","Adress","City","Birthdate","Username","roleid"
+       string[] TableHeaders = new string[]{" ","UserImage" ,"Fname"
+          ,"Lname"," Gender"," Email","PhoneNumber","Adress","City","Birthdate","Username"," "
      };
 
 }
@@ -74,10 +74,14 @@
                 foreach (var data in Model)
              
                 {
-
+ var index = Model.ToList().IndexOf(data)+1;
                     <tr>
-                        <td>@data.users.UserId </td>
-                                               <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
+                       
+              
+                             
+                       <td>@index </td>
+                                            
+                     <td> <img src="~/Image/@data.users.UserImage" asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
 
                         <td>@data.users.FirstName </td>
 
@@ -89,8 +93,13 @@
                         <td>@data.users.City</td>
                         <td>@data.users.BirthDate</td>
                         <td>@data.logins.UserName</td>
-                        <td>@data.roles.RoleId</td>
-
+                       
+                         <td id="f">
+                            @using (Html.BeginForm("create", "Messages", new { Id = @data.users.UserId }, FormMethod.Post))
+                            {
+                                <button class="btn btn-primary">Send message </button>
+                            }
+                        </td>
                        
                     </tr>
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using WebApplication29.Models;
 
 namespace WebApplication29.Controllers
@@ -14,9 +15,13 @@ namespace WebApplication29.Controllers
     {
         private readonly HomeServicesNewContext _context;
 
-        public SalariesController(HomeServicesNewContext context)
+        private readonly IToastNotification _toastNotification;
+        public SalariesController(HomeServicesNewContext context, IToastNotification toastNotification)
         {
             _context = context;
+
+            _toastNotification = toastNotification;
+
         }
 
         HomeServicesNewContext db = new HomeServicesNewContext();
@@ -64,29 +69,30 @@ namespace WebApplication29.Controllers
         }
 
         // GET: Salaries/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-    
-
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FirstName");
+            List<User> users = db.Users.ToList();
+            int employeeid = id;
+          ViewBag.EmployeeId = employeeid;
+            ViewBag.Employeename = users.Where(x=>x.UserId==id).Select(x=>x.FirstName).FirstOrDefault();
             return View();
         }
 
-        // POST: Salaries/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SalaryId,Salary1,Tracks,Inventives,MonthOfSalary,TotalSalary,UserId")] Salary salary)
+        
+     
+        public IActionResult Create1(double Salary1, double Tracks,double Inventives,DateTime MonthOfSalary,double TotalSalary, Salary salary,int id)
         {
-            if (salary.UserId!=null|| ModelState.IsValid)
-            {
-                _context.Add(salary);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FirstName", salary.UserId);
-            return View(salary);
+            salary.UserId = id;
+            salary.Salary1 = Salary1;
+            salary.Tracks = Tracks;
+            salary.Inventives = Inventives;
+            salary.TotalSalary = TotalSalary;
+            salary.MonthOfSalary = MonthOfSalary;
+           _context.Add(salary);
+           _context.SaveChangesAsync();
+
+            _toastNotification.AddSuccessToastMessage("Salary add sucssfully");
+            return RedirectToAction("AddSalary","Admin");
         }
 
         // GET: Salaries/Edit/5

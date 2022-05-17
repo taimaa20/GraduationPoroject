@@ -60,7 +60,7 @@ namespace WebApplication29.Controllers
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Categories");
             }
             return View(category);
         }

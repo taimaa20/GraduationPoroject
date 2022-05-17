@@ -103,49 +103,58 @@ namespace WebApplication29.Controllers
 
             List<Login> loginss = db.Logins.ToList();
           var name = loginss.Where(x => x.UserName == UserName).ToList();
-            if (name == null)
+            if (Password != ConfirmPassword)
             {
-                login.RoleId = 5;
-                login.UserName = UserName;
-                login.Password = Password;
-                login.ConfimPassword = ConfirmPassword;
-                _context.Add(login);
-                _context.SaveChangesAsync();
-                List<Login> logins = db.Logins.ToList();
-                var LastId = logins.Where(x => x.UserName == UserName).Select(x => x.LoginId).FirstOrDefault();
-                user.FirstName = FirstName;
-                user.LastName = LastName;
-
-                user.Gender = Gender;
-                user.PhoneNumber = PhoneNumber;
-                user.Email = Email;
-                user.Adress = Adress;
-                user.City = City;
-                user.BirthDate = BirthDate;
-                user.ImageFile = ImageFile;
-                user.LoginId = LastId;
-                if (user.ImageFile != null)
-                {
-                    string wRootPath = _hostEnvironment.WebRootPath;
-                    string fileName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
-                    string path = Path.Combine(wRootPath + "/Image/", fileName);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-
-                        user.ImageFile.CopyToAsync(fileStream);
-                    }
-                    user.UserImage = fileName;
-                    _context.Add(user);
-                    _context.SaveChangesAsync();
-                    return RedirectToAction("login");
-                }
+                _toastNotification.AddErrorToastMessage("The confirm password is wrong");
+                return RedirectToAction("Adds", "Admin");
             }
             else
             {
-                _toastNotification.AddErrorToastMessage("The username already taken");
-                return RedirectToAction("Regstration");
-            }
+                if (name.Count() == 0)
+                {
+                    login.RoleId = 5;
+                    login.UserName = UserName;
+                    login.Password = Password;
+                    login.ConfimPassword = ConfirmPassword;
+                    _context.Add(login);
+                    _context.SaveChangesAsync();
+                    List<Login> logins = db.Logins.ToList();
+                    var LastId = logins.Where(x => x.UserName == UserName).Select(x => x.LoginId).FirstOrDefault();
+                    user.FirstName = FirstName;
+                    user.LastName = LastName;
 
+                    user.Gender = Gender;
+                    user.PhoneNumber = PhoneNumber;
+                    user.Email = Email;
+                    user.Adress = Adress;
+                    user.City = City;
+                    user.BirthDate = BirthDate;
+                    user.ImageFile = ImageFile;
+                    user.LoginId = LastId;
+                    if (user.ImageFile != null)
+                    {
+                        string wRootPath = _hostEnvironment.WebRootPath;
+                        string fileName = Guid.NewGuid().ToString() + "_" + user.ImageFile.FileName;
+                        string path = Path.Combine(wRootPath + "/Image/", fileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+
+                            user.ImageFile.CopyToAsync(fileStream);
+                        }
+                        user.UserImage = fileName;
+                        _context.Add(user);
+                        _context.SaveChangesAsync();
+                       
+                    }
+                    _toastNotification.AddSuccessToastMessage("welcome to home service website");
+                    return RedirectToAction("login");
+                }
+                else
+                {
+                    _toastNotification.AddErrorToastMessage("The username already taken");
+                    return RedirectToAction("Regstration");
+                }
+            }
             return RedirectToAction("login");
         }
         public IActionResult Logout()

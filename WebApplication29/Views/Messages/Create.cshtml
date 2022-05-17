@@ -2,40 +2,39 @@
 
 @{
      Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = "Create";
+     var id = ViewBag.EmployeeId;
+     var Employeename = ViewBag.Employeename;
+    
 }
 
-<h1>Create</h1>
+<h1>send message</h1>
 
-<h4>Message</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create1">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MessageText" class="control-label"></label>
-                <input asp-for="MessageText" class="form-control" />
-                <span asp-validation-for="MessageText" class="text-danger"></span>
+            <div class="form-group mb-3">
+                 <label class="MessageText" for="MessageText">MessageText</label>
+                  <input name="MessageText"class="form-control" id="MessageText" type="text"  placeholder="MessageText" required>
+                              
             </div>
-            <div class="form-group">
-                <label asp-for="SenderName" class="control-label"></label>
-                <input asp-for="SenderName" class="form-control" />
-                <span asp-validation-for="SenderName" class="text-danger"></span>
+            
+            <div class="form-group mb-3">
+                 <label class="MessageTitle" for="MessageTitle">MessageTitle</label>
+                  <input name="MessageTitle"class="form-control" id="MessageTitle"  type="text" placeholder="MessageTitle" required>
+            
             </div>
-            <div class="form-group">
-                <label asp-for="MessageTitle" class="control-label"></label>
-                <input asp-for="MessageTitle" class="form-control" />
-                <span asp-validation-for="MessageTitle" class="text-danger"></span>
+               <div class="form-group mb-3">
+                 <label class="MessageDate" for="MessageDate">MessageDate</label>
+                  <input name="MessageDate"class="form-control" id="MessageDate" type="date"   placeholder="MessageDate" required>
+            
+                
             </div>
-                    <div class="form-group">
-                <label asp-for="MessageDate" class="control-label"></label>
-                <input asp-for="MessageDate" class="form-control" />
-                <span asp-validation-for="MessageDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+          <div class="form-group mb-3">
+                <label class="id" for="id">Employee name : @Employeename</label>
+                  <input name="id"class="form-control" id="id"   hidden value="@id" required>
+           
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -44,6 +43,4 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+

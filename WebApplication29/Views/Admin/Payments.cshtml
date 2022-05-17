@@ -4,7 +4,7 @@
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
  
-       string[] TableHeaders = new string[]{"PaymentId","PaymentType" ,"PaymentAmount","CardNumber","paymentDate","FirstName","LastName","PhoneNumber","status","Date","Service Name","Price"
+       string[] TableHeaders = new string[]{" ","PaymentType" ,"PaymentAmount","paymentDate","FirstName","LastName","PhoneNumber","service status","service date","Service Name","service price"
      };
 
 }
@@ -37,7 +37,7 @@
 
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="Payments">
                 <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" name="UName"  placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" name="UName"  placeholder="Search for user..." aria-label="Search" aria-describedby="basic-addon2">
                          <input type="submit" value="search"  class="btn btn-primary " />   
                                                  <h6 style="padding-top: 10px;padding-left: 10px;font-size: 20px;">
     <a asp-action="Payments">get all</a>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="admitcard" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                                             @{
@@ -76,11 +76,12 @@
              
                 {
 
-                    <tr>
-                        <td>@data.payment.PaymentId </td>
+              var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
+                        
                             <td>@data.payment.PaymentType </td>
                       <td>@data.payment.PaymentAmount </td>
-                       <td>@data.payment.CardNumber </td>
                            <td>@data.payment.PaymentDate </td>
                             <td>@data.users.FirstName </td>
                       <td>@data.users.LastName </td>

@@ -4,8 +4,8 @@
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
    
-       string[] TableHeaders = new string[]{"UserID","UserImage" ,"Fname"
-          ,"Lname"," Gender"," Email","PhoneNumber","Adress","City","Birthdate","Username","roleid","salary","Tracks","Inventives","MonthOfSalary","TotalSalary"
+       string[] TableHeaders = new string[]{" ","UserImage" ,"Fname"
+          ,"Lname"," Gender"," Email","PhoneNumber","Adress","City","Birthdate","Username","salary","Tacks","Inventives","MonthOfSalary","TotalSalary"
      };
 
 }
@@ -33,7 +33,18 @@
 
     }
 </script>
+   <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="DisplaySalaryEmployee">
+                <div class="input-group">
+                      <label >Start Month</label>
+                            
+                      <input input type="month" name="date" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        
+                        <input type="submit" value="search"  class="btn btn-primary " />   
+                          
+                        </div> 
 
+              
+                 </form>
     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Employee Salaries  </h6>
@@ -63,9 +74,10 @@
              
                 {
 
-                    <tr>
-                        <td>@data.users.UserId </td>
-                                                       <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
+                  var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
+                        <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
 
                         <td>@data.users.FirstName </td>
 
@@ -77,20 +89,13 @@
                         <td>@data.users.City</td>
                         <td>@data.users.BirthDate</td>
                         <td>@data.logins.UserName</td>
-                        <td>@data.roles.RoleId</td>
+                     
                         <td>@data.salaries.Salary1</td>
                         <td>@data.salaries.Tracks</td>
                         <td>@data.salaries.Inventives</td>
                         <td>@data.salaries.MonthOfSalary</td>
                         <td>@data.salaries.TotalSalary</td>
-               
-                          <td id="f">
-                            @using (Html.BeginForm("Edit", "Salaries", new { Id = @data.salaries.SalaryId }, FormMethod.Get))
-                            {
-                                <button class="btn btn-primary">edit </button>
-                            }
-                        </td>
-                       
+              
                     </tr>
 
 

@@ -186,8 +186,8 @@ namespace WebApplication29.Controllers
             user.Adress = Adress;
             user.City = City;
             user.BirthDate = BirthDate;
-           
-            user.ImageFile = ImageFile;
+            user.UserImage=
+            user.UserImage = UserImage;
             if (user.ImageFile != null)
             {
                 string wRootPath = _hostEnvironment.WebRootPath;
@@ -283,7 +283,7 @@ namespace WebApplication29.Controllers
 
             return RedirectToAction("ChangePassword");
         }
-        public IActionResult ServicesWithPayment(DateTime? startdate=null)
+        public IActionResult ServicesWithPayment(DateTime startdate)
         {
 
 
@@ -310,18 +310,20 @@ namespace WebApplication29.Controllers
                               select new joins { users = usr, payment = pay, userService = usrser, services = ser };
 
 
-
-
-            if (startdate==null)
+            DateTime date1 = new DateTime(01 / 01 / 0001);
+            if (startdate.ToString() == date1.ToString())
             {
                 AllServices = AllServices.Where(x => x.userService.UserId == employeeid);
+
             }
+
+
             else
             {
-                AllServices = AllServices.Where(x => x.userService.UserId == employeeid && x.userService.Date == startdate);
+                AllServices = AllServices.Where(x => x.userService.UserId == employeeid && x.userService.Date.Day == startdate.Day);
             }
          
-            return View(AllServices);
+            return View(AllServices.ToList());
         }
 
     }

@@ -6,9 +6,10 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","ServiceID" ,"ServiceName"
-          ,"Price"," CategoryId"," UserId","Description"
+     string[] TableHeaders = new string[]{" ","UserImage","FirstName","LastName","Service img" ,"ServiceName"
+          ,"Price"," Category name","Description"," "
      };
+
 
 }<script src="~/jsfiles/FileSaver.js"></script> @*could be downloaded from https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js*@
 <script>
@@ -37,7 +38,7 @@
 
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="servicesNameSearch">
                 <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" name="sName"  placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" name="sName"  placeholder="Search for service..." aria-label="Search" aria-describedby="basic-addon2">
                          <input type="submit" value="search"  class="btn btn-primary " />   
                                                  <h6 style="padding-top: 10px;padding-left: 10px;font-size: 20px;">
     <a asp-action="servicesNameSearch">get all</a>
@@ -49,7 +50,7 @@
                 
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">All Services </h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Employee Services </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -76,27 +77,35 @@
              
                 {
 
-                    <tr>
-
- <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
+                     var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
+      <td> 	<img src="~/Image/@data.users.UserImage" asp-append-version="true"style="width:60px;height:60px" style="border-radius:10px;" />
+</td> 
                         <td>@data.users.FirstName </td>
                         <td>@data.users.LastName</td>
-                        <td>@data.services.ServiceId </td>
+                          <td> 	<img src="~/Image/@data.services.UserImage" asp-append-version="true"style="width:60px;height:60px" style="border-radius:10px;" />
+</td> 
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
 
-                        <td>@data.services.CategoryId </td>
-                        <td>@data.services.UserId </td>
+                        <td>@data.categories.CategoryName </td>
+                   
                         <td>@data.services.Description</td>
                        
-                 
-                   <td id="f">
-                            @using (Html.BeginForm("Edit", "services", new { Id = @data.services.ServiceId }, FormMethod.Get))
+                  <td id="f">
+                            @using (Html.BeginForm("Edit", "services", new { Id = @data.services.ServiceId,serviceimge=@data.services.UserImage }, FormMethod.Get))
                             {
                                 <button class="btn btn-primary">edit </button>
                             }
                         </td>
 
+                 
+
+                  
+                       
+                 
+                  
                        
                     </tr>
 

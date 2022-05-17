@@ -176,7 +176,7 @@ namespace WebApplication29.Controllers
             return _context.Users.Any(e => e.UserId == id);
         }
         DateTime startDate =  DateTime.Today;
-        public IActionResult EmployeeServices(DateTime?  startDate=null)
+        public IActionResult EmployeeServices(DateTime  startDate)
         {
             int? employeeid = HttpContext.Session.GetInt32(id);
             ViewBag.id = HttpContext.Session.GetInt32(id);
@@ -198,15 +198,15 @@ namespace WebApplication29.Controllers
 
 
 
+            DateTime date1 = new DateTime(01 / 01 / 0001);
+            if (startDate.ToString() == date1.ToString())
+            {
+                startDate = DateTime.Today;
+            }
 
-            if (startDate==null)
-            {
-                AllServices = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date == DateTime.Today);
-            }
-            else
-            {
-                AllServices = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date == startDate);
-            }
+            
+                AllServices = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date.Day == startDate.Day);
+           
             return View(AllServices.ToList());
         }
        public IActionResult UserServicesName(string UserName)
@@ -245,7 +245,7 @@ namespace WebApplication29.Controllers
             services=services.Where(x=>x.UserId== employeeid).ToList();
             return View(services.ToList());
         }
-        public IActionResult MounthelyEmployeeServices(DateTime startDate ,DateTime endDate)
+        public IActionResult MounthelyEmployeeServices(DateTime startDate )
         {
 
             List<Service> services = db.Services.ToList();
@@ -264,23 +264,35 @@ namespace WebApplication29.Controllers
                               select new joins { users = us, services = ser, userService = usSer };
             int? employeeid = HttpContext.Session.GetInt32(id);
             ViewBag.id = HttpContext.Session.GetInt32(id);
-
-            var multable1 = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date >= startDate&&x.userService.Date<=endDate).OrderBy(x=>x.userService.Date);
+            DateTime date1 = new DateTime(01 / 01 / 0001);
+            if (startDate.ToString() == date1.ToString())
+            {
+                startDate = DateTime.Today;
+            }
+            var multable1 = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date.Month == startDate.Month).OrderBy(x=>x.userService.Date);
             return View(multable1.ToList());
         }
       
-        public IActionResult EmployeeMessage(DateTime? startDate )
+        public IActionResult EmployeeMessage(DateTime startDate )
         {
             int? employeeid = HttpContext.Session.GetInt32(id);
             ViewBag.id = HttpContext.Session.GetInt32(id);
             List<Message> messages = db.Messages.ToList();
-            messages=messages.Where(x=>x.UserId == employeeid).OrderByDescending(x => x.MessageDate).ToList();
-         
-            if (startDate.HasValue)
+           
+
+
+            DateTime date1 = new DateTime(01 / 01 / 0001);
+            if (startDate.ToString() == date1.ToString())
             {
-                messages = messages.Where(x => x.MessageDate == startDate).OrderBy(x=>x.MessageDate).ToList();
+                messages = messages.Where(x => x.UserId == employeeid).OrderByDescending(x => x.MessageDate).ToList();
             }
-                return View(messages.ToList());
+            else{
+                messages = messages.Where(x => x.MessageDate.Day == startDate.Day).OrderBy(x => x.MessageDate).ToList();
+
+            }
+
+
+            return View(messages.ToList());
         }
         public IActionResult ChangePassword()
         {
@@ -325,8 +337,8 @@ namespace WebApplication29.Controllers
             user.Adress = Adress;
             user.City = City;
             user.BirthDate = BirthDate;
-
-            user.ImageFile = ImageFile;
+            user.UserImage = UserImage;
+       
             if (user.ImageFile != null)
             {
                 string wRootPath = _hostEnvironment.WebRootPath;

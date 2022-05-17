@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using WebApplication29.Models;
 
 namespace WebApplication29.Controllers
@@ -13,11 +14,16 @@ namespace WebApplication29.Controllers
     public class MessagesController : Controller
     {
         private readonly HomeServicesNewContext _context;
-
-        public MessagesController(HomeServicesNewContext context)
+     
+        private readonly IToastNotification _toastNotification;
+        public MessagesController(HomeServicesNewContext context, IToastNotification toastNotification)
         {
             _context = context;
+         
+            _toastNotification = toastNotification;
+
         }
+        HomeServicesNewContext db = new HomeServicesNewContext();
 
         // GET: Messages
         public async Task<IActionResult> Index()
@@ -46,29 +52,33 @@ namespace WebApplication29.Controllers
         }
 
         // GET: Messages/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+            List<User> users = db.Users.ToList();
+            int employeeid = id;
+            ViewBag.EmployeeId = employeeid;
+            ViewBag.Employeename = users.Where(x => x.UserId == id).Select(x => x.FirstName).FirstOrDefault();
             return View();
         }
 
-        // POST: Messages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MessageId,MessageText,SenderName,MessageTitle,MessageDate,UserId")] Message message)
-        {
-            if (message.UserId!=null|| ModelState.IsValid)
-            {
-                _context.Add(message);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", message.UserId);
-            return View(message);
-        }
 
+
+        public IActionResult Create1(string MessageText, string MessageTitle, DateTime MessageDate, Message message, int id)
+        {
+            message.UserId = id;
+            message.SenderName = "Admin";
+            message.MessageText = MessageText;
+            message.MessageTitle = MessageTitle;
+            message.MessageDate = MessageDate;
+      
+            _context.Add(message);
+            _context.SaveChangesAsync();
+            _toastNotification.AddSuccessToastMessage("Message sent sucssfully");
+
+            return RedirectToAction("DisplayEmployee", "Admin");
+        }
+       
+       
         // GET: Messages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

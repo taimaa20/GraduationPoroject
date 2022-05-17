@@ -199,7 +199,8 @@ namespace WebApplication29.Controllers
             {
                 _context.Add(contactU);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _toastNotification.AddSuccessToastMessage("thank you for contacting us");
+                return RedirectToAction("ContactUs");
             }
             return View(contactU);
         }

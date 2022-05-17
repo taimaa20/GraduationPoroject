@@ -25,11 +25,25 @@
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           <!-- <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
                 <input asp-for="Status" class="form-control" />
                 <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
+            </div>-->
+             <div class="input-group" style="">
+             <label class="label" style="text-align: left; margin-right:10px;">Payment Type :</label>
+               <div class="p-t-10">
+                <label class="radio-container m-r-45">under prosses
+                <input type="radio" value="under prosses" type="radio" checked="checked"  asp-for="Status" id="PaymenType">
+                 <span class="checkmark"></span>
+                  </label>
+                  <label class="radio-container" style="margin-left:5px;">done
+                  <input type="radio"  asp-for="Status" id="PaymenType" value="done"> 
+                  <span class="checkmark"></span>
+                  </label>
+                 
+                   </div>
+                  </div>
             <div hidden class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>

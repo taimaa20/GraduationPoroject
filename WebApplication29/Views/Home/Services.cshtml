@@ -39,24 +39,21 @@
 	
 			<div class="col-md-3 "  >
 				 		<div class="box" style="margin-top:50px;" > 
-	<img src="~/Image/@user.UserImage" asp-append-version="true"style="width:260px;height:152.125px" style="border-radius:50%;" />
+	<img src="~/Image/@user.UserImage" asp-append-version="true"style="width:260px;height:152.125px;  margin: 10%;" style="border-radius:50%;" />
 		<div class="box-area" >
 		<h3>@user.ServiceName</h3> <p>@user.Description</p> 
 		<h3>price:@user.Price jd</h3>
-		 <form asp-action="_UserServicePartial">
+		<form asp-action="_UserServicePartial">
 
 		           
-						<input type="hidden" name="UserImage" id="UserImage" class="form-control" placeholder="UserImage"  readonly="readonly" value="@user.UserImage" required>
+					<input type="hidden" name="UserImage" id="UserImage" class="form-control" placeholder="UserImage"  readonly="readonly" value="@user.UserImage" required>
 
 					<input type="hidden" name="ServiceId" id="ServiceId" class="form-control" placeholder="ServiceId"  readonly="readonly" value="@user.ServiceId" required>
 					<input type="hidden" name="ServiceName" id="ServiceName" class="form-control" placeholder="ServiceName"  readonly="readonly" value="@user.ServiceName" required>
 					<input type="hidden" name="Description" id="Description" class="form-control" placeholder="Description"  readonly="readonly" value="@user.Description" required>
 					<input type="hidden" name="Price" id="Price" class="form-control" placeholder="Price"  readonly="readonly" value="@user.Price" required>
-                       	 <button type="submit" style="border-radius:15px; border:5px;">Book Now</button>
-                    
-				
-
-								</form>
+                    <button type="submit" style="border-radius:15px; border:5px;">Book Now</button>
+                    </form>
 						
 </div></div>
 		</div>		 	

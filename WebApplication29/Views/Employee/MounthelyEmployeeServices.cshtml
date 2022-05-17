@@ -6,7 +6,7 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"ServiceID" ,"UserServiceId","ServiceName"
+     string[] TableHeaders = new string[]{" ","ServiceName"
           ,"Price","Description","Date"," UserId","User Name","Adress","city","Phone Number ","Status"
      };
 
@@ -39,16 +39,16 @@
  
     
    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="MounthelyEmployeeServices">
-                <div class="input-group">
-                      <label>Start date</label>
+                 <div class="input-group">
+                      <label>Month</label>
                             
-                      <input input type="date" name="startDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                      <input input type="month" name="startDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         
-                          <label>End Date </label>
-                            <input input type="date" name="endDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <input type="submit" value="search"  class="btn btn-primary " />   
-                         
+                         <input type="submit" value="search"  class="btn btn-primary " />   
+                          
                         </div> 
+                            <a asp-action="MounthelyEmployeeServices">this month</a>
+               
 
                
                  </form>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="admitcard" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                                             @{
@@ -82,10 +82,12 @@
              
                 {
 
+    var index = Model.ToList().IndexOf(data)+1;
                     <tr>
                        
-                        <td>@data.services.ServiceId </td>
-                       <td>@data.userService.UserServiceId </td>
+              
+                             
+                                        <td>@index </td>
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
                         <td>@data.services.Description</td>
@@ -97,7 +99,7 @@
                                <td>@data.users.PhoneNumber </td>
                         <td>@data.userService.Status </td>
                     
-                       
+                          
 
                     </tr>
 

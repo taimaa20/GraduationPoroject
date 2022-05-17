@@ -120,7 +120,7 @@ namespace WebApplication29.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("EmployeeServices","Employee");
             }
             ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId", userService.ServiceId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", userService.UserId);

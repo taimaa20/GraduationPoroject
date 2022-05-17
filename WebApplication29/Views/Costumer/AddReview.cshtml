@@ -7,7 +7,7 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"Img","ServiceName"
+       string[] TableHeaders = new string[]{" ","Img","ServiceName"
           ,"Price","Description","Date","Status"
      };
 
@@ -69,9 +69,10 @@
                 foreach (var data in Model)
              
                 {
-
-                    <tr>
-                       
+                    
+                     var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
                     <td>  <img src="~/Image/@data.services.UserImage" asp-append-version="true" width="150px" height="100" style="border-radius:50%;" /></td>
                      
                         <td>@data.services.ServiceName </td>

@@ -6,8 +6,8 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","ServiceID" ,"ServiceName"
-          ,"Price"," CategoryId"," UserId","Description"
+       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","Service img" ,"ServiceName"
+          ,"Price"," Category name"," UserId","Description"
      };
 
 }
@@ -37,16 +37,19 @@
              
                 {
 
-                    <tr>
+                    var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
       <td> 	<img src="~/Image/@data.users.UserImage" asp-append-version="true"style="width:60px;height:60px" style="border-radius:10px;" />
 </td> 
                         <td>@data.users.FirstName </td>
                         <td>@data.users.LastName</td>
-                        <td>@data.services.ServiceId </td>
+                          <td> 	<img src="~/Image/@data.services.UserImage" asp-append-version="true"style="width:60px;height:60px" style="border-radius:10px;" />
+</td> 
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
 
-                        <td>@data.services.CategoryId </td>
+                        <td>@data.categories.CategoryName </td>
                         <td>@data.services.UserId </td>
                         <td>@data.services.Description</td>
                        

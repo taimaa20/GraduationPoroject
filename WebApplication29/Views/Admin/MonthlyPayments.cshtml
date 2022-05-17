@@ -4,7 +4,7 @@
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
  
-       string[] TableHeaders = new string[]{"PaymentId","PaymentType" ,"PaymentAmount","CardNumber","paymentDate","FirstName","LastName","PhoneNumber","status","Date","Service Name","Price"
+     string[] TableHeaders = new string[]{" ","PaymentType" ,"PaymentAmount","paymentDate","FirstName","LastName","PhoneNumber","service status","service date","Service Name","service price"
      };
 
 }
@@ -34,24 +34,25 @@
 </script>
 
         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2  mw-100 navbar-search"  style="margin-bottom:15px;" asp-action="MonthlyPayments">
-                <div class="input-group">
-                      <label>Start Month</label>
+                    <div class="input-group">
+                      <label>Month</label>
                             
                       <input input type="month" name="startDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         
-                      <label>End Month </label>
-                            <input input type="month" name="endDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <input type="submit" value="search"  class="btn btn-primary " />   
+                         <input type="submit" value="search"  class="btn btn-primary " />   
                           
                         </div> 
-
+                            <a asp-action="MonthlyPayments">this month</a>
               
                  </form>
+
+              
+               
 
                 
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">All User Services </h6>
+                            <h6 class="m-0 font-weight-bold text-primary">monthly payments records </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -77,22 +78,24 @@
                 foreach (var data in Model)
              
                 {
-
-                    <tr>
-                        <td>@data.payment.PaymentId </td>
+   var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
+                        
                             <td>@data.payment.PaymentType </td>
                       <td>@data.payment.PaymentAmount </td>
-                       <td>@data.payment.CardNumber </td>
                            <td>@data.payment.PaymentDate </td>
                             <td>@data.users.FirstName </td>
                       <td>@data.users.LastName </td>
                        <td>@data.users.PhoneNumber </td>
-                           <td>@data.userService.Status </td>
+                        <td>@data.userService.Status </td>
                                <td>@data.userService.Date </td>
-                                <td>@data.services.ServiceName </td>
+                     <td>@data.services.ServiceName </td>
                     <td>@data.services.Price </td>
-                                  
+
+
                     </tr>
+
 
 
                 }

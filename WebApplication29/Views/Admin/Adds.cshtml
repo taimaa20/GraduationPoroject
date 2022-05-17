@@ -5,41 +5,44 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Add Employee</h1>
 
-<h4>Login</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Adds" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+        <form asp-action="Adds1" enctype="multipart/form-data">
+       
+             <div class="form-group mb-3">
+                <label class="label" for="UserName">UserName</label>
+            
+           <input name="UserName" class="form-control" id="UserName"  pattern="^[a-zA-Z][a-zA-Z0-9-_.]{5,12}$" title="alphanumeric 6 to 12 chars" placeholder="UserName" required>
+                              
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+        
+             <div class="form-group mb-3">
+                <label class="label" for="Password">Password</label>
+                                    
+                                    <input name="Password" class="form-control" id="Password" type="password"    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="at least one number and one uppercase and lowercase letter, and at least 6 or more characters" placeholder="Password" required>
+                              
             </div>
-            <div class="form-group">
-                <label asp-for="ConfimPassword" class="control-label"></label>
-                <input asp-for="ConfimPassword" class="form-control" />
-                <span asp-validation-for="ConfimPassword" class="text-danger"></span>
-            </div>
+                <div class="form-group mb-3">
+                <label class="label" for="ConfirmPassword">Confirm your Password</label>
+                 
+                                    <input name="ConfirmPassword" type="password"  class="form-control" id="ConfirmPassword"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="at least one number and one uppercase and lowercase letter, and at least 6 or more characters" placeholder="ConfirmPassword" required>
+  </div>
         
                    <div class="form-group mb-3">
                 <label class="label" for="FirstName">FirstName</label>
-                <input name="FirstName" id="FirstName" type="text" class="form-control" placeholder="FirstName" required>
+                <input name="FirstName" id="FirstName" type="text" class="form-control"  pattern="^[a-zA-Z]{3,15}$" title="Name may only contain letters " placeholder="FirstName" required>
             </div>
              <div class="form-group mb-3">
                 <label class="label" for="LastName">LastName</label>
-                <input name="LastName" id="LastName" type="text" class="form-control" placeholder="LastName" required>
+                <input name="LastName" id="LastName" type="text" class="form-control" pattern="^[a-zA-Z]{3,15}$" title="Name may only contain letters " placeholder="LastName" required>
             </div>
                          <div class="form-group mb-3">
                 <div class="input-group">
-                                    <label class="label">Gender</label>
+                                    <label class="label" style="margin-right:10px;">Gender</label>
                                     <div class="p-t-10">
                                         <label class="radio-container m-r-45">Male
                                             <input type="radio" value="male" type="radio" checked="checked" name="Gender" id="Gender">
@@ -58,15 +61,15 @@
             </div>
                       <div class="form-group mb-3">
                 <label class="label" for="PhoneNumber">PhoneNumber</label>
-                <input name="PhoneNumber" id="PhoneNumber" type="text" class="form-control" placeholder="PhoneNumber" required>
+                <input name="PhoneNumber" id="PhoneNumber" type="text" class="form-control" pattern="[7]{1}[0-9]{9}" title="Phone number start with 7 and remaing 9 digit with 0-9" placeholder="PhoneNumber" required>
             </div>
                           <div class="form-group mb-3">
                 <label class="label" for="Adress">Adress</label>
-                <input name="Adress" id="Adress" type="text" class="form-control" placeholder="Adress" required>
+                <input name="Adress" id="Adress" type="text" class="form-control" pattern="^[a-zA-Z]{3,15}$" title="Name may only contain letters " placeholder="Adress" required>
             </div>
                                     <div class="form-group mb-3">
                 <label class="label" for="City">City</label>
-                <input name="City" id="City" type="text" class="form-control" placeholder="City" required>
+                <input name="City" id="City" type="text" class="form-control" pattern="^[a-zA-Z]{3,15}$" title="Name may only contain letters " placeholder="City" required>
             </div>
                                   <div class="form-group mb-3">
                <div class="input-group">

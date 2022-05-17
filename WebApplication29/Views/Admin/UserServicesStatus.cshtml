@@ -6,8 +6,8 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","ServiceID" ,"ServiceName"
-          ,"Price"," CategoryId"," UserId","Description","Date","Status","UserServiceId"
+       string[] TableHeaders = new string[]{" ","employeeimage","FirstName","LastName" ,"ServiceName"
+          ,"Price"," CategoryId","Description","Date","Status",
      };
 
 }
@@ -56,7 +56,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="admitcard" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                                             @{
@@ -79,21 +79,18 @@
              
                 {
 
-                    <tr>
-
+                                    var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
  <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
                         <td>@data.users.FirstName </td>
                         <td>@data.users.LastName</td>
-                        <td>@data.services.ServiceId </td>
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
                         <td>@data.services.CategoryId </td>
-                        <td>@data.services.UserId </td>
                         <td>@data.services.Description</td>
                          <td>@data.userService.Date </td>
                         <td>@data.userService.Status </td>
-                        <td>@data.userService.UserServiceId </td>
-
                     </tr>
 
 

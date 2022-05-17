@@ -6,8 +6,8 @@
     var countOFEmployees= ViewBag.countOFEmployees ;
 
     var countOFUsers = ViewBag.countOFUsers; 
-       string[] TableHeaders = new string[]{"UserImage","FirstName","LastName","UserServiceId" ,"ServiceId"
-          ,"date"," Status","ReviewRange","ReviewText"
+       string[] TableHeaders = new string[]{" ","UserImage","FirstName","LastName","service name" ,"service description"
+          ,"service date"," Status","ReviewRange","ReviewText"
      };
 
 }
@@ -43,13 +43,11 @@
                       <label>Start date</label>
                             
                       <input input type="date" name="startDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        
-                      <label>End date </label>
-                            <input input type="date" name="endDate" class="form-control bg-light border-0 small"   placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <input type="submit" value="search"  class="btn btn-primary " />   
+                      
+                      <input type="submit" value="search"  class="btn btn-primary " />   
                           
                         </div> 
-
+                         <a asp-action="DailyUserReview">get today</a>
               
                  </form>
 
@@ -83,13 +81,17 @@
              
                 {
 
-                    <tr>
-                                    <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
+                   var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
+
+ <td>  <img src=@Url.Content("~/Image/" + @data.users.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
                         <td>@data.users.FirstName </td>
                         <td>@data.users.LastName</td>
-                         <td>@data.userService.UserServiceId </td>
-                        <td>@data.userService.ServiceId </td>
-
+                         <td>@data.services.ServiceName </td>
+                        <td>@data.services.Description </td>
+                    
+                     
                          <td>@data.userService.Date </td>
                         <td>@data.userService.Status </td>
                            <td>@data.review.ReviewRange </td>

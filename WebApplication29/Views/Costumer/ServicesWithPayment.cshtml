@@ -4,7 +4,7 @@
 
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
  
-       string[] TableHeaders = new string[]{"PaymentType" ,"PaymentAmount","CardNumber","paymentDate","status","Date","Service Name","Price"
+       string[] TableHeaders = new string[]{" ","service image","PaymentType" ,"PaymentAmount","CardNumber","paymentDate","status","Date","Service Name","Service Description","Price"
      };
 
 }
@@ -76,8 +76,12 @@
              
                 {
 
-                    <tr>
                    
+                     var index = Model.ToList().IndexOf(data)+1;
+                                    <tr>
+                                        <td>@index </td>
+                                       <td>  <img src="~/Image/@data.services.UserImage" asp-append-version="true" width="150px" height="100" style="border-radius:50%;" /></td>
+
                          <td>@data.payment.PaymentType </td>
                          <td>@data.payment.PaymentAmount </td>
                          <td>@data.payment.CardNumber </td>
@@ -85,6 +89,7 @@
                          <td>@data.userService.Status </td>
                          <td>@data.userService.Date </td>
                          <td>@data.services.ServiceName </td>
+                         <td>@data.services.Description</td>
                          <td>@data.services.Price </td>
 
 

@@ -8,7 +8,7 @@
     var countOFAllUsers = ViewBag.countOFAllUsers;
     var countOFServices = ViewBag.countOFServices;
     var countOFCustomer = ViewBag.countOFCustomer;
-        string[] TableHeaders = new string[]{"Number","UserID","UserImage" ,"Fname"
+        string[] TableHeaders = new string[]{"Number","UserImage" ,"Fname"
           ,"Lname"," Gender"," Email","PhoneNumber","Adress","City","Birthdate"
      };
 
@@ -139,7 +139,7 @@
                      var index = Model.ToList().IndexOf(data)+1;
                                     <tr>
                                         <td>@index </td>
-                                           <td>@data.UserId </td>
+                                          
                     
  <td>  <img src=@Url.Content("~/Image/" + @data.UserImage) asp-appendversion="true" class="poster" width="60" height="60"  style="border-radius: 10px;"/></td> 
 

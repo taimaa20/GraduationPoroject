@@ -205,7 +205,7 @@ namespace WebApplication29.Controllers
             }
 
             
-                AllServices = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date.Day == startDate.Day);
+                AllServices = AllServices.Where(x => x.services.UserId == employeeid && x.userService.Date == startDate);
            
             return View(AllServices.ToList());
         }
@@ -287,7 +287,7 @@ namespace WebApplication29.Controllers
                 messages = messages.Where(x => x.UserId == employeeid).OrderByDescending(x => x.MessageDate).ToList();
             }
             else{
-                messages = messages.Where(x => x.MessageDate.Day == startDate.Day).OrderBy(x => x.MessageDate).ToList();
+                messages = messages.Where(x => x.MessageDate == startDate && x.UserId == employeeid).OrderBy(x => x.MessageDate).ToList();
 
             }
 

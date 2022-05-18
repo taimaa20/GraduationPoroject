@@ -140,7 +140,8 @@ namespace WebApplication29.Controllers
 
 
 
-            return RedirectToAction("ServicesDetails", new {UserServiceId=UserServiceId});
+            _toastNotification.AddAlertToastMessage("thank you for the review");
+            return RedirectToAction("AddReview");
         }
      
         public IActionResult ChangePassword()

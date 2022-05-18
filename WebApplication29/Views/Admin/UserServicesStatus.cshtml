@@ -7,7 +7,7 @@
 
     var countOFUsers = ViewBag.countOFUsers; 
        string[] TableHeaders = new string[]{" ","employeeimage","FirstName","LastName" ,"ServiceName"
-          ,"Price"," CategoryId","Description","Date","Status",
+          ,"Price","Description","Date","Status",
      };
 
 }
@@ -87,7 +87,7 @@
                         <td>@data.users.LastName</td>
                         <td>@data.services.ServiceName </td>
                         <td>@data.services.Price </td>
-                        <td>@data.services.CategoryId </td>
+                 
                         <td>@data.services.Description</td>
                          <td>@data.userService.Date </td>
                         <td>@data.userService.Status </td>

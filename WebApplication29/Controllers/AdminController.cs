@@ -388,7 +388,7 @@ namespace WebApplication29.Controllers
                 startDate = DateTime.Today;
             }
 
-            var multable1 = AllServices.Where(x => x.userService.Date.Day== startDate.Day);
+            var multable1 = AllServices.Where(x => x.userService.Date== startDate);
 
             return View(multable1.ToList());
         }

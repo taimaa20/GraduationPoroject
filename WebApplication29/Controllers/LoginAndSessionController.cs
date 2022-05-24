@@ -48,7 +48,6 @@ namespace WebApplication29.Controllers
         
            var id=auth.FirstOrDefault();
             var auth1 = _context.Logins.Where(x => x.UserName == UserName && x.Password == Password).SingleOrDefault();
-
             if (auth1 != null)
             {
 
@@ -72,8 +71,11 @@ namespace WebApplication29.Controllers
 
                     case 5:
                         {
+                            var fisrtname = user.Where(x => x.UserId == id.users.UserId).Select(x => x.FirstName).FirstOrDefault();
+                            var lastname = user.Where(x => x.UserId == id.users.UserId).Select(x => x.LastName).FirstOrDefault();
 
                             HttpContext.Session.SetInt32("id", id.users.UserId);
+                            _toastNotification.AddSuccessToastMessage("welcome to the system "+fisrtname.ToString()+" "+ lastname.ToString());
                             return RedirectToAction("HomeIndex", "Home");
                         }
 

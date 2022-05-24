@@ -497,25 +497,18 @@ namespace WebApplication29.Controllers
         }
 
         
-        public IActionResult Adds1(string UserName, string Password, string ConfirmPassword, Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage, IFormFile ImageFile, User user)
+        public IActionResult Adds1(string UserName, string Password, Login login, string FirstName, string LastName, string Gender, string Email, string PhoneNumber, string Adress, string City, DateTime BirthDate, string UserImage, IFormFile ImageFile, User user)
         {
 
 
             List<Login> loginss = db.Logins.ToList();
             var name = loginss.Where(x => x.UserName == UserName).ToList();
-            if( Password!= ConfirmPassword)
-            {
-                _toastNotification.AddErrorToastMessage("The confirm password is wrong");
-                return RedirectToAction("Adds", "Admin");
-            }
-            else
-            {
                 if (name.Count() == 0)
                 {
                     login.RoleId = 3;
                     login.UserName = UserName;
                     login.Password = Password;
-                    login.ConfimPassword = ConfirmPassword;
+                    login.ConfimPassword = Password;
                     _context.Add(login);
                     _context.SaveChangesAsync();
                     List<Login> logins = db.Logins.ToList();
@@ -554,7 +547,7 @@ namespace WebApplication29.Controllers
                     _toastNotification.AddErrorToastMessage("The username already taken");
                     return RedirectToAction("Adds", "Admin");
                 }
-            }
+            
           
 
             return RedirectToAction("login");

@@ -355,6 +355,7 @@ namespace WebApplication29.Controllers
             _context.Update(user);
 
             _context.SaveChangesAsync();
+            _toastNotification.AddSuccessToastMessage("Update profile Success");
             return RedirectToAction("ChangePassword");
         }
         public IActionResult ChangePasswordBasic(string CurrentPassword, string NewPassword, string ConfirmPssword, Login login)
@@ -386,6 +387,7 @@ namespace WebApplication29.Controllers
                 _context.Update(login);
 
                 _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Update password Success");
             }
             else
             {
@@ -424,6 +426,7 @@ namespace WebApplication29.Controllers
                 _context.Update(login);
 
                 _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Update username Success");
             }
             else
             {

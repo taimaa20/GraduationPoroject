@@ -205,6 +205,7 @@ namespace WebApplication29.Controllers
             _context.Update(user);
 
             _context.SaveChangesAsync();
+            _toastNotification.AddSuccessToastMessage("Update profile Success");
             return RedirectToAction("ChangePassword");
         }
         public IActionResult ChangePasswordBasic(string CurrentPassword, string NewPassword, string ConfirmPssword, Login login)
@@ -236,6 +237,7 @@ namespace WebApplication29.Controllers
                 _context.Update(login);
 
                 _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Update password Success");
             }
             else
             {
@@ -274,6 +276,7 @@ namespace WebApplication29.Controllers
                 _context.Update(login);
 
                 _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Update username Success");
             }
             else
             {
@@ -281,7 +284,7 @@ namespace WebApplication29.Controllers
             }
 
 
-
+            
             return RedirectToAction("ChangePassword");
         }
         public IActionResult ServicesWithPayment(DateTime startdate)
@@ -321,7 +324,7 @@ namespace WebApplication29.Controllers
 
             else
             {
-                AllServices = AllServices.Where(x => x.userService.UserId == employeeid && x.userService.Date.Day == startdate.Day);
+                AllServices = AllServices.Where(x => x.userService.UserId == employeeid && x.userService.Date == startdate);
             }
          
             return View(AllServices.ToList());

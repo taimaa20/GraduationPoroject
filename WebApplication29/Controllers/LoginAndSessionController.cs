@@ -108,7 +108,7 @@ namespace WebApplication29.Controllers
             if (Password != ConfirmPassword)
             {
                 _toastNotification.AddErrorToastMessage("The confirm password is wrong");
-                return RedirectToAction("Adds", "Admin");
+                return RedirectToAction("Regstration", "LoginAndSession");
             }
             else
             {
@@ -144,17 +144,18 @@ namespace WebApplication29.Controllers
                             user.ImageFile.CopyToAsync(fileStream);
                         }
                         user.UserImage = fileName;
-                        _context.Add(user);
-                        _context.SaveChangesAsync();
-                       
+                      
                     }
+                    _context.Add(user);
+                    _context.SaveChangesAsync();
                     _toastNotification.AddSuccessToastMessage("welcome to home service website");
                     return RedirectToAction("login");
                 }
                 else
                 {
                     _toastNotification.AddErrorToastMessage("The username already taken");
-                    return RedirectToAction("Regstration");
+                    return RedirectToAction("Regstration", "LoginAndSession");
+
                 }
             }
             return RedirectToAction("login");
